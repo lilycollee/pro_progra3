@@ -18,4 +18,9 @@ public class DetalleReserva {
     public void setRecursoAsignado(Recurso recursoAsignado) {
         this.recursoAsignado = recursoAsignado;
     }
+
+    public String toString(){
+        String recurso = recursoAsignado.getId();
+        return recurso;
+    }
 }

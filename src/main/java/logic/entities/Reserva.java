@@ -57,4 +57,11 @@ public class Reserva {
     public List<DetalleReserva> getDetalles() {
         return detalleReservas;
     }
+    public String getRecursosAsignado() {
+        String recursosAsignado = "";
+        for (DetalleReserva detalleReserva : detalleReservas) {
+            recursosAsignado += detalleReserva.toString() + ",";
+        }
+        return recursosAsignado;
+    }
 }

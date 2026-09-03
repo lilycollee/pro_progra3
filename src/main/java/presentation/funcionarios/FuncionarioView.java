@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FuncionarioView extends JPanel{
-    private JPanel panelPrincipal;
+    private JPanel panel;
     Controller controller;
     Model model;
 
