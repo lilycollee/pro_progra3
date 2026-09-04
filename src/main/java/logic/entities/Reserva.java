@@ -7,6 +7,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+
+
 public class Reserva {
     private String id;
     private String actividad;
