@@ -3,6 +3,7 @@ package presentation.funcionarios;
 import logic.entities.Funcionario;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +38,11 @@ public class FuncionarioView extends JPanel{
     }
 
     public FuncionarioView(){
+        setLayout(new BorderLayout());
+        add(panel, BorderLayout.CENTER);
+
         tableModel = new FuncionariosTableModel(new ArrayList<>());
         tablaDeListado.setModel(tableModel);
-
-        Controller controller;
-        Model model;
     }
 
     public void mostrarListado(List<Funcionario> funcionarios){
