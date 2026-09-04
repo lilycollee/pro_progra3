@@ -1,11 +1,16 @@
-import presentation.MainView;
+import logic.Service;
+import presentation.login.Controller;
+import presentation.login.LoginView;
+import presentation.login.Model;
 
 public class Application {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
-            String rol = "Funcionarios"; //por mientras se hace el del login que va primero
-            MainView mainView = new MainView(rol);
-            mainView.setVisible(true);
+            Service service = new Service();
+            LoginView loginView = new LoginView();
+            Model model = new Model();
+            Controller controller = new Controller(loginView, model, service);
+            loginView.setVisible(true);
         });
     }
 }
