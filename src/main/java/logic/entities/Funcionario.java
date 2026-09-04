@@ -1,5 +1,7 @@
 package logic.entities;
 
+import logic.entities.enums.Rol;
+
 public class Funcionario extends Usuario {
     private String nombre;
     private String telefono;

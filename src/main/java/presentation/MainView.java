@@ -1,6 +1,6 @@
 package presentation;
 
-import logic.entities.Rol;
+import logic.entities.enums.Rol;
 import presentation.funcionarios.FuncionarioView;
 
 import javax.swing.*;

@@ -5,7 +5,7 @@ import presentation.TableModel;
 
 import java.util.List;
 
-public class ReservasTableModel extends TableModel {
+public class ReservasTableModel extends TableModel<Reserva> {
     public ReservasTableModel(List<Reserva> datos) {
         super(new int[]{0, 1, 2, 3, 4, 5}, datos);
     }
@@ -17,7 +17,7 @@ public class ReservasTableModel extends TableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        /*Reserva reserva = datos.get(row);
+        Reserva reserva = datos.get(row);
         return switch(col) {
             case 0 -> reserva.getId();
             case 1 -> reserva.getActividad();
@@ -26,7 +26,6 @@ public class ReservasTableModel extends TableModel {
             case 4 -> reserva.getRecursosAsignado();
             case 5 -> reserva.getEstado();
             default -> null;
-        };*/
-        return 0;
+        };
     }
 }

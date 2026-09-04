@@ -1,4 +1,4 @@
-package logic.entities;
+package logic.entities.enums;
 
 public class Rol {
     public static final String ADMINISTRADOR = "ADMINISTRADOR";

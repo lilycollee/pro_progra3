@@ -1,5 +1,7 @@
 package logic.entities;
 
+import logic.entities.enums.EstadoReserva;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

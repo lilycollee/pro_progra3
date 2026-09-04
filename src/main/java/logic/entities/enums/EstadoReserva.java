@@ -1,4 +1,4 @@
-package logic.entities;
+package logic.entities.enums;
 
 public class EstadoReserva {
     public static final String ACTIVA = "ACTIVA";
