@@ -96,4 +96,20 @@ public class FuncionarioView extends JPanel implements PropertyChangeListener {
     public String getNombreF() {
         return nombreF.getText().trim();
     }
+    public String getTelefonoF() {
+        return telefonoF.getText().trim();
+    }
+    public String getIdB() {
+        return idB.getText().trim();
+    }
+    public String getNombreB() {
+        return nombreB.getText().trim();
+    }
+    public int getFilaSeleccionada() {
+        return tablaDeListado.getSelectedRow();
+    }
+
+    public void mostrarError(String msj){
+        JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }
