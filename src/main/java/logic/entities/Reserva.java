@@ -11,6 +11,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import data.adapter.LocalDateAdapter;
 import data.adapter.LocalTimeAdapter;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Reserva {
     private String id;
     private String actividad;
