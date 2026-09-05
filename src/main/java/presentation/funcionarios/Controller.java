@@ -1,7 +1,6 @@
 package presentation.funcionarios;
 
 import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -12,7 +11,6 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import logic.Service;
-import logic.entities.CategoriaRecurso;
 import logic.entities.Funcionario;
 
 import javax.swing.*;
