@@ -7,15 +7,19 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import data.adapter.LocalDateAdapter;
+import data.adapter.LocalTimeAdapter;
 
 public class Reserva {
     private String id;
     private String actividad;
     private Funcionario funcionario;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fecha;
+    @XmlJavaTypeAdapter(LocalTimeAdapter.class)
     private LocalTime horaInicio;
+    @XmlJavaTypeAdapter(LocalTimeAdapter.class)
     private LocalTime horaFin;
     private String estado;
     private List<DetalleReserva> detalleReservas = new ArrayList<>();

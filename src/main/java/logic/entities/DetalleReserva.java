@@ -1,5 +1,9 @@
 package logic.entities;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DetalleReserva {
     private CategoriaRecurso categoriaSolicitada;
     private Recurso recursoAsignado;
