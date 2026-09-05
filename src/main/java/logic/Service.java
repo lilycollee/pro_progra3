@@ -22,7 +22,7 @@ public class Service {
     public Usuario autenticar(String id, String clave) {
         for (Administrador administrador : data.getAdministradores()) {
             if (administrador.getId().equals(id)) {
-                if (administrador.getClave().equals(clave)) {
+                if (administrador.getClave().equals(id)) {
                     return administrador;
                 }
             }
@@ -124,7 +124,7 @@ public class Service {
     }
     private boolean estaOcupado(Recurso recurso, Reserva nuevaReserva) {
         for (Reserva existente : data.getReservas()) {
-            if (!existente.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+            if (existente.getEstado() == null || !existente.getEstado().equals(EstadoReserva.ACTIVA)) continue;
             if (!existente.getFecha().equals(nuevaReserva.getFecha())) continue;
             boolean seSolapan = nuevaReserva.getHoraInicio().isBefore(existente.getHoraFin()) && existente.getHoraInicio().isBefore(nuevaReserva.getHoraFin());
             if (!seSolapan) continue;

@@ -110,13 +110,13 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="08:00 a.m."/>
-                    <item value="09:00 a.m."/>
-                    <item value="10:00 a.m."/>
-                    <item value="11:00 a.m."/>
-                    <item value="01:00 p.m."/>
-                    <item value="02:00 p.m."/>
-                    <item value="03:00 p.m."/>
+                    <item value="08:00"/>
+                    <item value="09:00"/>
+                    <item value="10:00"/>
+                    <item value="11:00"/>
+                    <item value="12:00"/>
+                    <item value="13:00"/>
+                    <item value="14:00"/>
                   </model>
                 </properties>
               </component>
@@ -126,13 +126,13 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="08:00 a.m."/>
-                    <item value="09:00 a.m."/>
-                    <item value="10:00 a.m."/>
-                    <item value="11:00 a.m."/>
-                    <item value="01:00 p.m."/>
-                    <item value="02:00 p.m."/>
-                    <item value="03:00 p.m."/>
+                    <item value="08:00"/>
+                    <item value="09:00"/>
+                    <item value="10:00"/>
+                    <item value="11:00"/>
+                    <item value="12:00"/>
+                    <item value="13:00"/>
+                    <item value="14:00"/>
                   </model>
                 </properties>
               </component>
