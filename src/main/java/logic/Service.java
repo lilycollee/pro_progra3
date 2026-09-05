@@ -13,6 +13,7 @@ public class Service {
 
     public Service() {
         data = XmlPersister.instance().load();
+
     }
     private void guardarCambios(){
         XmlPersister.instance().store(data);
