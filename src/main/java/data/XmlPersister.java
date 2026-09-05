@@ -31,7 +31,7 @@ public class XmlPersister {
 
     public Data load(){
         File file = new File(DATA_FILE);
-        if (file.exists()) {
+        if (!file.exists()) {
             return new Data(); //cuando se corre el sistema por primera vez no hay un Xml
         }
         try {
