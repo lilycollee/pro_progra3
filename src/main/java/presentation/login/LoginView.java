@@ -8,6 +8,7 @@ public class LoginView extends JFrame {
     private JPasswordField claveField;
     private JButton ingresarButton;
     private JLabel mensajeErrorLabel;
+    private JButton cambiarClaveButton;
 
     private Controller controller;
     private Model model;
@@ -24,6 +25,8 @@ public class LoginView extends JFrame {
             String clave = new String(claveField.getPassword());
             controller.ingresar(id, clave);
         });
+
+        cambiarClaveButton.addActionListener(e -> controller.abrirCambioClave(idField.getText()));
     }
 
     public void setController(Controller controller) {

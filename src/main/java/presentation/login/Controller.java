@@ -42,4 +42,32 @@ public class Controller {
             view.mostrarError("Identificador o clave incorrectos");
         }
     }
+
+    public void abrirCambioClave(String idPrellenado) {
+        CambiarClaveView dialog = new CambiarClaveView(view, idPrellenado);
+        dialog.setController(this);
+        dialog.setVisible(true);
+    }
+
+    public void cambiarClave(CambiarClaveView dialogView, String id, String claveActual, String claveNueva, String claveConfirmar) {
+        boolean algunCampoVacio = id == null || id.isBlank() || claveActual == null || claveActual.isBlank() || claveNueva == null || claveNueva.isBlank()
+                || claveConfirmar == null || claveConfirmar.isBlank();
+
+        if (algunCampoVacio) {
+            dialogView.mostrarError("Debe llenar todos los campos");
+            return;
+        }
+        if (!claveNueva.equals(claveConfirmar)) {
+            dialogView.mostrarError("La clave nueva y la confirmación no coinciden");
+            return;
+        }
+
+        boolean exito = service.cambiarClave(id, claveActual, claveNueva);
+        if (!exito) {
+            dialogView.mostrarError("La clave actual es incorrecta");
+            return;
+        }
+
+        dialogView.mostrarExito("Clave cambiada correctamente");
+    }
 }

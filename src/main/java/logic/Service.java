@@ -2,10 +2,8 @@ package logic;
 
 import data.Data;
 import data.XmlPersister;
-
 import logic.entities.*;
 import logic.entities.enums.EstadoReserva;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -137,4 +135,31 @@ public class Service {
         }
         return false;
     }
+
+    // ---------- Cambiar clave ----------
+
+    public boolean cambiarClave(String id, String claveActual, String claveNueva) {
+        Usuario usuario = null;
+        for (Administrador administrador : data.getAdministradores()) {
+            if (administrador.getId().equals(id)) {
+                usuario = administrador;
+                break;
+            }
+        }
+        if (usuario == null) {
+            for (Funcionario funcionario : data.getFuncionarios()) {
+                if (funcionario.getId().equals(id)) {
+                    usuario = funcionario;
+                    break;
+                }
+            }
+        }
+        if (usuario == null || !usuario.validarClave(claveActual)) {
+            return false;
+        }
+        usuario.cambiarClave(claveNueva);
+        guardarCambios();
+        return true;
+    }
+
 }
