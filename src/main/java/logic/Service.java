@@ -4,6 +4,8 @@ import data.Data;
 import data.XmlPersister;
 
 import logic.entities.*;
+import logic.entities.enums.EstadoReserva;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,5 +71,69 @@ public class Service {
     }
     public List<Administrador> obtenerAdministradores() {
         return data.getAdministradores();
+    }
+
+    // ---------- Categorías ----------
+
+    public List<CategoriaRecurso> obtenerCategorias() {
+        return data.getCategorias();
+    }
+
+    //---------- Reservas ----------
+
+    public List<Reserva> obtenerReservas() {
+        return data.getReservas();
+    }
+
+    public ResultadoReserva crearReserva(Reserva reservaSolicitada) {
+        List<CategoriaRecurso> noDisponibles = new ArrayList<>();
+        List<DetalleReserva> detallesAsignados = new ArrayList<>();
+        for (DetalleReserva detalle : reservaSolicitada.getDetalles()) {
+            Recurso disponible = buscarRecursoDisponible(detalle.getCategoriaSolicitada(), reservaSolicitada);
+            if (disponible == null) {
+                noDisponibles.add(detalle.getCategoriaSolicitada());
+            } else {
+                detalle.setRecursoAsignado(disponible);
+                detallesAsignados.add(detalle);
+            }
+        }
+        if (!noDisponibles.isEmpty()) {
+            return ResultadoReserva.fracaso(noDisponibles);
+        }
+        String id = "R" + (data.getReservas().size() + 1);
+        Reserva reserva = new Reserva(id, reservaSolicitada.getFuncionario(), reservaSolicitada.getActividad(), reservaSolicitada.getFecha(), reservaSolicitada.getHoraInicio(), reservaSolicitada.getHoraFin());
+        for (DetalleReserva detalle : detallesAsignados) {
+            reserva.agregarDetalleReserva(detalle);
+        }
+        data.getReservas().add(reserva);
+        guardarCambios();
+        return ResultadoReserva.exito();
+    }
+    public void cancelarReserva(String id) {
+        data.getReservas().stream().filter(r -> r.getId().equals(id)).findFirst().ifPresent(Reserva::cancelarReserva);
+        guardarCambios();
+    }
+    private Recurso buscarRecursoDisponible(CategoriaRecurso categoria, Reserva nuevaReserva) {
+        List<Recurso> recursosDeCategoria = data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(categoria.getId())).toList();
+        for (Recurso recurso : recursosDeCategoria) {
+            if (!estaOcupado(recurso, nuevaReserva)) {
+                return recurso;
+            }
+        }
+        return null;
+    }
+    private boolean estaOcupado(Recurso recurso, Reserva nuevaReserva) {
+        for (Reserva existente : data.getReservas()) {
+            if (!existente.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+            if (!existente.getFecha().equals(nuevaReserva.getFecha())) continue;
+            boolean seSolapan = nuevaReserva.getHoraInicio().isBefore(existente.getHoraFin()) && existente.getHoraInicio().isBefore(nuevaReserva.getHoraFin());
+            if (!seSolapan) continue;
+            for (DetalleReserva detalle : existente.getDetalles()) {
+                if (detalle.getRecursoAsignado() != null && detalle.getRecursoAsignado().getId().equals(recurso.getId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

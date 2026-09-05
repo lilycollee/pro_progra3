@@ -67,10 +67,13 @@ public class Reserva {
         return detalleReservas;
     }
     public String getRecursosAsignado() {
-        String recursosAsignado = "";
+        StringBuilder sb = new StringBuilder();
         for (DetalleReserva detalleReserva : detalleReservas) {
-            recursosAsignado += detalleReserva.toString() + ",";
+            if (detalleReserva.getRecursoAsignado() != null) {
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(detalleReserva.getRecursoAsignado().getDescripcion());
+            }
         }
-        return recursosAsignado;
+        return sb.toString();
     }
 }
