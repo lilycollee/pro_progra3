@@ -1,11 +1,24 @@
 package presentation.reservas;
 
-import javax.swing.*;
+import logic.entities.CategoriaRecurso;
 
-public class ReservasView extends JPanel{
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReservasView extends JPanel implements PropertyChangeListener {
     private JPanel panelReservas;
     Controller controller;
     Model model;
+
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
 
     //Nueva Reserva
     private JPanel panel;
@@ -19,9 +32,9 @@ public class ReservasView extends JPanel{
 
     //Horas
     private JTextField horaInicioField;
-    private JComboBox comboBox1;
+    private JComboBox horasInicio;
     private JTextField horaFinalField;
-    private JComboBox comboBox2;
+    private JComboBox horasFinal;
 
     //Reservas
     private JButton reservarButton;
@@ -30,4 +43,109 @@ public class ReservasView extends JPanel{
     private JTable tablaReservas;
     private JButton imprimirButton;
     private JTable tablaCategorias;
+
+    private ReservasTableModel reservasTableModel;
+    private CategoriasTableModel categoriasTableModel;
+
+    public ReservasView() {
+        setLayout(new java.awt.BorderLayout());
+        add(panelReservas, java.awt.BorderLayout.CENTER);
+        reservasTableModel = new ReservasTableModel(new ArrayList<>());
+        categoriasTableModel = new CategoriasTableModel(new ArrayList<>());
+
+        tablaReservas.setModel(reservasTableModel);
+        tablaCategorias.setModel(categoriasTableModel);
+        tablaCategorias.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        // El horasInicio/horasFinal llena el campo de texto correspondiente al elegir una hora
+        horasInicio.addActionListener(e-> horaInicioField.setText(String.valueOf(horasInicio.getSelectedItem())));
+        horasFinal.addActionListener(e-> horaFinalField.setText(String.valueOf(horasFinal.getSelectedItem())));
+
+        fechasButton.addActionListener(e-> abrirSelectorFecha());
+    }
+
+    private void abrirSelectorFecha() {
+
+    }
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt){
+        switch (evt.getPropertyName()){
+            case Model.RESERVAS -> reservasTableModel.setDatos(model.getReservas());
+            case Model.CATEGORIAS -> categoriasTableModel.setDatos(model.getCategorias());
+            case Model.CURRENT -> mostrarCurrent();
+        }
+    }
+    public void mostrarCurrent(){
+
+    }
+
+    public void addReservarListener(ActionListener actionListener){
+        reservarButton.addActionListener(actionListener);
+    }
+    public void addLimpiarListener(ActionListener actionListener){
+        limpiarButton.addActionListener(actionListener);
+    }
+    public void addCancelarReservaListener(ActionListener actionListener){
+        cancelarReservaSelecionadaButton.addActionListener(actionListener);
+    }
+    public void addImprimirListener(ActionListener actionListener){
+        imprimirButton.addActionListener(actionListener);
+    }
+    public void addSeleccionReservaListener(javax.swing.event.ListSelectionListener actionListener){
+        tablaReservas.getSelectionModel().addListSelectionListener(actionListener);
+    }
+
+    public String getActividad() {
+        return actividadField.getText();
+    }
+    public LocalDate getFecha() {
+        try {
+            return LocalDate.parse(actividadField.getText().trim(), FORMATO_FECHA);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public LocalTime getHoraInicio() {
+        try {
+            return LocalTime.parse(horaInicioField.getText().trim(), FORMATO_HORA);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public LocalTime getHoraFinal() {
+        try {
+            return LocalTime.parse(horaFinalField.getText().trim(), FORMATO_HORA);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public List<CategoriaRecurso> getCategoriasSeleccionadas() {
+        List<CategoriaRecurso> categorias = new ArrayList<>();
+        for (int fila : tablaCategorias.getSelectedRows()) {
+            categorias.add(categoriasTableModel.getFila(fila));
+        }
+        return categorias;
+    }
+    public int getFilasReservaSeleccionada() {
+        return tablaReservas.getSelectedRow();
+    }
+
+    public void limpiarCampos(){
+        fraseField.setText("");
+        actividadField.setText("");
+        fechaField.setText("");
+        horaInicioField.setText("");
+        horaFinalField.setText("");
+        tablaCategorias.clearSelection();
+    }
+    public void mostrarError(String mgs){
+        JOptionPane.showMessageDialog(this, mgs, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

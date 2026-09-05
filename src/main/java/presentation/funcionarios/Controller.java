@@ -1,5 +1,6 @@
 package presentation.funcionarios;
 
+//-------- Pdf import's --------
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -10,6 +11,7 @@ import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+
 import logic.Service;
 import logic.entities.Funcionario;
 
