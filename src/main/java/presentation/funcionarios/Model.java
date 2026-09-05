@@ -39,5 +39,6 @@ public class Model extends AbstractModel {
     }
     public void setListaFuncionarios(List<Funcionario> listaFuncionarios) {
         this.listaFuncionarios = listaFuncionarios;
+        firePropertyChange(LIST);
     }
 }
