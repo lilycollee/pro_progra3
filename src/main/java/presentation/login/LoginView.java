@@ -38,4 +38,8 @@ public class LoginView extends JFrame {
             }
         });
     }
+
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error de ingreso", JOptionPane.ERROR_MESSAGE);
+    }
 }
