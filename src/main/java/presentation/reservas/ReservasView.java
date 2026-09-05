@@ -64,6 +64,7 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
     }
     public void setModel(Model model) {
         this.model = model;
+        model.addPropertyChangeListener(this);
     }
 
     @Override
