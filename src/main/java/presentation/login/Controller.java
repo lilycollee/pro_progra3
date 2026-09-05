@@ -22,7 +22,7 @@ public class Controller {
         if (usuario != null) {
             model.setMensajeError("");
             view.dispose();
-            new MainView(usuario.getRole());
+            new MainView(usuario);
         } else {
             model.setMensajeError("Identificador o clave incorrectos");
         }

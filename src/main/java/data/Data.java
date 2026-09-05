@@ -36,7 +36,24 @@ public class Data {
         recursos = new ArrayList<>();
         reservas = new ArrayList<>();
 
-        administradores.add(new Administrador("administrador"));
+        // ---- Datos quemados para pruebas ----
+
+        // Login: admin/admin y f001/f001 (la clave = el id, ver Usuario/Funcionario)
+        administradores.add(new Administrador("admin"));
+        funcionarios.add(new Funcionario("f001", "Juan Pérez", "8888-8888"));
+        funcionarios.add(new Funcionario("f002", "María Rodríguez", "8888-9999"));
+
+        // Categorías de recursos
+        CategoriaRecurso catProyectores = new CategoriaRecurso("CAT001", "Proyectores");
+        CategoriaRecurso catSalas = new CategoriaRecurso("CAT002", "Salas de reunión");
+        categorias.add(catProyectores);
+        categorias.add(catSalas);
+
+        // Recursos (deben apuntar a una categoría ya creada arriba)
+        recursos.add(new Recurso("REC001", "Proyector Epson 1", catProyectores));
+        recursos.add(new Recurso("REC002", "Proyector Epson 2", catProyectores));
+        recursos.add(new Recurso("REC003", "Sala A", catSalas));
+        recursos.add(new Recurso("REC004", "Sala B", catSalas));
     }
     public List<Administrador> getAdministradores() {
         return administradores;
@@ -54,3 +71,4 @@ public class Data {
         return reservas;
     }
 }
+

@@ -1,5 +1,6 @@
 package presentation.reservas;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import logic.entities.CategoriaRecurso;
 
 import javax.swing.*;
@@ -17,18 +18,14 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
     Controller controller;
     Model model;
 
-    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
 
-    //Nueva Reserva
-    private JPanel panel;
     private JTextField fraseField;
     private JButton extraerButton;
     private JTextField actividadField;
 
     //Fecha
-    private JTextField fechaField;
-    private JButton fechasButton;
+    private DatePicker fecha;
 
     //Horas
     private JTextField horaInicioField;
@@ -60,13 +57,8 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
         // El horasInicio/horasFinal llena el campo de texto correspondiente al elegir una hora
         horasInicio.addActionListener(e-> horaInicioField.setText(String.valueOf(horasInicio.getSelectedItem())));
         horasFinal.addActionListener(e-> horaFinalField.setText(String.valueOf(horasFinal.getSelectedItem())));
-
-        fechasButton.addActionListener(e-> abrirSelectorFecha());
     }
 
-    private void abrirSelectorFecha() {
-
-    }
     public void setController(Controller controller) {
         this.controller = controller;
     }
@@ -106,11 +98,7 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
         return actividadField.getText();
     }
     public LocalDate getFecha() {
-        try {
-            return LocalDate.parse(actividadField.getText().trim(), FORMATO_FECHA);
-        } catch (Exception e) {
-            return null;
-        }
+       return fecha.getDate();
     }
     public LocalTime getHoraInicio() {
         try {
@@ -140,7 +128,7 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
     public void limpiarCampos(){
         fraseField.setText("");
         actividadField.setText("");
-        fechaField.setText("");
+        fecha.clear();
         horaInicioField.setText("");
         horaFinalField.setText("");
         tablaCategorias.clearSelection();
