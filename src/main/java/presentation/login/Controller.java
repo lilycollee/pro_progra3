@@ -18,13 +18,28 @@ public class Controller {
     }
 
     public void ingresar(String id, String clave) {
+        boolean idVacio = id == null || id.isBlank();
+        boolean claveVacia = clave == null || clave.isBlank();
+
+        if (idVacio && claveVacia) {
+            view.mostrarError("Debe ingresar el identificador y la clave");
+            return;
+        }
+        if (idVacio) {
+            view.mostrarError("Debe ingresar el identificador");
+            return;
+        }
+        if (claveVacia) {
+            view.mostrarError("Debe ingresar la clave");
+            return;
+        }
+
         Usuario usuario = service.autenticar(id, clave);
         if (usuario != null) {
-            model.setMensajeError("");
             view.dispose();
             new MainView(usuario);
         } else {
-            model.setMensajeError("Identificador o clave incorrectos");
+            view.mostrarError("Identificador o clave incorrectos");
         }
     }
 }

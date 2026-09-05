@@ -23,13 +23,13 @@ public class Service {
     public Usuario autenticar(String id, String clave) {
         for (Administrador administrador : data.getAdministradores()) {
             if (administrador.getId().equals(id)) {
-                if (administrador.getClave().equals(id)) {
+                if (administrador.getClave().equals(clave)) {
                     return administrador;
                 }
             }
         }
         for (Funcionario funcionario : data.getFuncionarios()) {
-            if (funcionario.getId().equals(clave)) {
+            if (funcionario.getId().equals(id)) {
                 if (funcionario.getClave().equals(clave)) {
                     return funcionario;
                 }
