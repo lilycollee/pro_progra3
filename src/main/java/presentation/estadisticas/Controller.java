@@ -7,6 +7,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import java.awt.Color;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,7 +44,7 @@ public class Controller {
         List<EstadisticaItem> datos = service.obtenerEstadisticasRecurso(desde, hasta);
         model.setListaRecursos(datos);
         DefaultCategoryDataset dataset = crearDataset(datos, "Recurso");
-        JFreeChart chart = crearGraficoBarras("Recursos Usados", "Categoría", "Cantidad", dataset);
+        JFreeChart chart = crearGraficoBarras("Recursos Usados", "Categoría", "Cantidad", dataset, Color.RED);
         view.mostrarGraficoRecursos(chart);
     }
     private void cargarActividades(){
@@ -58,7 +61,7 @@ public class Controller {
         List<EstadisticaItem> datos = service.obtenerEstadisticasActividades(desde, hasta);
         model.setListaActividades(datos);
         DefaultCategoryDataset dataset = crearDataset(datos, "Semana");
-        JFreeChart chart = crearGraficoBarras("Actividades Realizadas", "Semana", "Cantidad", dataset);
+        JFreeChart chart = crearGraficoBarras("Actividades Realizadas", "Semana", "Cantidad", dataset, Color.BLUE);
         view.mostrarGraficoActividades(chart);
     }
 
@@ -69,7 +72,11 @@ public class Controller {
         }
         return dataset;
     }
-    private JFreeChart crearGraficoBarras(String titulo, String categoria, String valor, DefaultCategoryDataset dataset){
-        return ChartFactory.createBarChart(titulo, categoria, valor, dataset, PlotOrientation.VERTICAL, true, true, false);
+    private JFreeChart crearGraficoBarras(String titulo, String categoria, String valor, DefaultCategoryDataset dataset, Color colorBarras) {
+        JFreeChart chart = ChartFactory.createBarChart(titulo, categoria, valor, dataset, PlotOrientation.VERTICAL, true, true, false);
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, colorBarras);
+        return chart;
     }
 }

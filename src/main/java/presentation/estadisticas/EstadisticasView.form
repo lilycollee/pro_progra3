@@ -18,11 +18,49 @@
         <properties/>
         <border type="line" title="Recursos"/>
         <children>
-          <grid id="c20b" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="36252" binding="panelGraficoRecursos" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="163" height="58"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="176" height="500"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="line" title="Grafico"/>
+            <children/>
+          </grid>
+          <grid id="6c09d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="176" height="150"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="line" title="Estadisticas"/>
+            <children>
+              <scrollpane id="fc500">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="291" height="100"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="7e88d" class="javax.swing.JTable" binding="tablaEstadisticasRecursos">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+          <grid id="c20b" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="176" height="48"/>
               </grid>
             </constraints>
             <properties/>
@@ -34,11 +72,6 @@
                 </constraints>
                 <properties/>
               </component>
-              <hspacer id="e29b">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
               <component id="1decd" class="javax.swing.JButton" binding="cargarRecursosButton">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -55,44 +88,6 @@
               </component>
             </children>
           </grid>
-          <grid id="6c09d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="163" height="455"/>
-              </grid>
-            </constraints>
-            <properties/>
-            <border type="line" title="Estadisticas"/>
-            <children>
-              <scrollpane id="fc500">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="291" height="427"/>
-                  </grid>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="7e88d" class="javax.swing.JTable" binding="tablaEstadisticasRecursos">
-                    <constraints/>
-                    <properties/>
-                  </component>
-                </children>
-              </scrollpane>
-            </children>
-          </grid>
-          <grid id="36252" binding="panelGraficoRecursos" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="163" height="24"/>
-              </grid>
-            </constraints>
-            <properties/>
-            <border type="line" title="Grafico"/>
-            <children/>
-          </grid>
         </children>
       </grid>
       <grid id="1b506" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -103,21 +98,16 @@
         <properties/>
         <border type="line" title="Actividades"/>
         <children>
-          <grid id="5508d" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="5508d" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="176" height="48"/>
               </grid>
             </constraints>
             <properties/>
             <border type="line" title="Fechas Desde y Hasta"/>
             <children>
-              <hspacer id="a6bd1">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
               <component id="5b257" class="javax.swing.JButton" binding="cargarActividadesButton">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -140,11 +130,22 @@
               </component>
             </children>
           </grid>
+          <grid id="3998d" binding="panelGraficoActividades" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="176" height="500"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="line" title="Grafico"/>
+            <children/>
+          </grid>
           <grid id="d4b28" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="176" height="455"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="176" height="150"/>
               </grid>
             </constraints>
             <properties/>
@@ -164,17 +165,6 @@
                 </children>
               </scrollpane>
             </children>
-          </grid>
-          <grid id="3998d" binding="panelGraficoActividades" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="176" height="24"/>
-              </grid>
-            </constraints>
-            <properties/>
-            <border type="line" title="Grafico"/>
-            <children/>
           </grid>
         </children>
       </grid>
