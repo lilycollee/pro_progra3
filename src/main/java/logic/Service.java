@@ -4,9 +4,12 @@ import data.Data;
 import data.XmlPersister;
 import logic.entities.*;
 import logic.entities.enums.EstadoReserva;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Map;
+import java.util.*;
 
 public class Service {
     private Data data;
@@ -52,6 +55,9 @@ public class Service {
     }
     public List<Funcionario> obtenerFuncionarios() {
         return data.getFuncionarios();
+    }
+    public List<Reserva> obtenerReservasPorFuncionario(String idFuncionario) {
+        return data.getReservas().stream().filter(r -> r.getFuncionario().getId().equals(idFuncionario)).toList();
     }
 
     //-------- Administradores --------
@@ -160,6 +166,38 @@ public class Service {
         usuario.cambiarClave(claveNueva);
         guardarCambios();
         return true;
+    }
+
+    //---------- Estadísticas ----------
+    public List<EstadisticaItem> obtenerEstadisticasRecurso(LocalDate desde, LocalDate hasta) {
+        Map<String, Long> conteo = new TreeMap<>();
+        for (Reserva reserva : data.getReservas()) {
+            if(!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+            if (reserva.getFecha().isBefore(desde) || reserva.getFecha().isAfter(hasta)) continue;
+            for(DetalleReserva detalle : reserva.getDetalles()) {
+                String categoria = detalle.getRecursoAsignado() != null ? detalle.getRecursoAsignado().getCategoriaRecurso().getDescripcion() : detalle.getCategoriaSolicitada().getDescripcion();
+                conteo.merge(categoria, 1L, Long::sum);
+            }
+        }
+        List<EstadisticaItem> resultado = new ArrayList<>();
+        for (Map.Entry<String, Long> entry : conteo.entrySet()) {
+            resultado.add(new EstadisticaItem(entry.getKey(), entry.getValue()));
+        }
+        return resultado;
+    }
+    public List<EstadisticaItem> obtenerEstadisticasActividades(LocalDate desde, LocalDate hasta) {
+        Map<LocalDate, Long> conteo = new TreeMap<>();
+        for (Reserva reserva : data.getReservas()) {
+            if(!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+            if (reserva.getFecha().isBefore(desde) || reserva.getFecha().isAfter(hasta)) continue;
+            LocalDate inicioSemana = reserva.getFecha().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            conteo.merge(inicioSemana, 1L, Long::sum);
+        }
+        List<EstadisticaItem> resultado = new ArrayList<>();
+        for (Map.Entry<LocalDate, Long> entry : conteo.entrySet()) {
+            resultado.add(new EstadisticaItem(entry.getKey().toString(), entry.getValue()));
+        }
+        return resultado;
     }
 
 }
