@@ -78,11 +78,49 @@ public class Service {
         return data.getAdministradores();
     }
 
+    // ---------- Recursos ----------
+
+    public Recurso guardarRecurso(Recurso recurso) {
+        eliminarRecurso(recurso.getId());
+        data.getRecursos().add(recurso);
+        guardarCambios();
+        return recurso;
+    }
+
+    public void eliminarRecurso(String id) {
+        data.getRecursos().removeIf(recurso -> recurso.getId().equals(id));
+        guardarCambios();
+    }
+
+    public Optional<Recurso> obtenerRecurso(String id) {
+        return data.getRecursos().stream().filter(r -> r.getId().equals(id)).findFirst();
+    }
+
+    public List<Recurso> obtenerRecursos() {
+        return data.getRecursos();
+    }
+
     // ---------- Categorías ----------
 
     public List<CategoriaRecurso> obtenerCategorias() {
         return data.getCategorias();
     }
+    public CategoriaRecurso guardarCategoria(CategoriaRecurso categoria) {
+        eliminarCategoria(categoria.getId());
+        data.getCategorias().add(categoria);
+        guardarCambios();
+        return categoria;
+    }
+
+    public void eliminarCategoria(String id) {
+        data.getCategorias().removeIf(categoria -> categoria.getId().equals(id));
+        guardarCambios();
+    }
+
+    public Optional<CategoriaRecurso> obtenerCategoria(String id) {
+        return data.getCategorias().stream().filter(c -> c.getId().equals(id)).findFirst();
+    }
+
 
     //---------- Reservas ----------
 

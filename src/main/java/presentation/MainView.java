@@ -10,6 +10,7 @@ import presentation.funcionarios.FuncionarioView;
 import presentation.funcionarios.Controller;
 import presentation.funcionarios.Model;
 
+import presentation.recursos.RecursosView;
 import presentation.reservas.ReservasView;
 
 import javax.swing.*;
