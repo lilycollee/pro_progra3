@@ -321,5 +321,62 @@
                 </recursoAsignado>
             </detalleReservas>
         </reservas>
+        <reservas>
+            <id>R6</id>
+            <actividad>presentacion</actividad>
+            <funcionario>
+                <id>f001</id>
+                <clave>f001</clave>
+                <role>FUNCIONARIO</role>
+                <nombre>Juan Pérez</nombre>
+                <telefono>8888-8888</telefono>
+            </funcionario>
+            <fecha>2026-09-18</fecha>
+            <horaInicio>13:00</horaInicio>
+            <horaFin>17:00</horaFin>
+            <estado>ACTIVA</estado>
+            <detalleReservas>
+                <categoriaSolicitada>
+                    <id>CAT001</id>
+                    <descripcion>Proyectores</descripcion>
+                </categoriaSolicitada>
+                <recursoAsignado>
+                    <id>REC001</id>
+                    <descripcion>Proyector Epson 1</descripcion>
+                    <categoriaRecurso>
+                        <id>CAT001</id>
+                        <descripcion>Proyectores</descripcion>
+                    </categoriaRecurso>
+                </recursoAsignado>
+            </detalleReservas>
+            <detalleReservas>
+                <categoriaSolicitada>
+                    <id>CAT002</id>
+                    <descripcion>Salas de reunión</descripcion>
+                </categoriaSolicitada>
+                <recursoAsignado>
+                    <id>REC003</id>
+                    <descripcion>Sala A</descripcion>
+                    <categoriaRecurso>
+                        <id>CAT002</id>
+                        <descripcion>Salas de reunión</descripcion>
+                    </categoriaRecurso>
+                </recursoAsignado>
+            </detalleReservas>
+            <detalleReservas>
+                <categoriaSolicitada>
+                    <id>CAT003</id>
+                    <descripcion>Computadoras</descripcion>
+                </categoriaSolicitada>
+                <recursoAsignado>
+                    <id>REC005</id>
+                    <descripcion>Computador 1</descripcion>
+                    <categoriaRecurso>
+                        <id>CAT003</id>
+                        <descripcion>Computadoras</descripcion>
+                    </categoriaRecurso>
+                </recursoAsignado>
+            </detalleReservas>
+        </reservas>
     </reservas>
 </data>

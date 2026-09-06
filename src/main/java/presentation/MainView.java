@@ -4,7 +4,7 @@ import logic.Service;
 import logic.entities.Usuario;
 import logic.entities.Funcionario;
 import logic.entities.enums.Rol;
-
+import java.awt.Dimension;
 import presentation.estadisticas.EstadisticasView;
 import presentation.funcionarios.FuncionarioView;
 import presentation.funcionarios.Controller;
@@ -77,7 +77,8 @@ public class MainView extends JFrame {
 
         this.add(pestañas);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(900, 600);
+        this.setMinimumSize(new Dimension(1300, 700));
+        this.setSize(1300, 700);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
