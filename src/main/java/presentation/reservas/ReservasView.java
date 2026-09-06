@@ -94,6 +94,9 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
     public void addSeleccionReservaListener(javax.swing.event.ListSelectionListener actionListener){
         tablaReservas.getSelectionModel().addListSelectionListener(actionListener);
     }
+    public void addExtraerIAListener(ActionListener actionListener){
+        extraerButton.addActionListener(actionListener);
+    }
 
     public String getActividad() {
         return actividadField.getText();
@@ -139,5 +142,35 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
     }
     public void mostrarMensaje(String mgs){
         JOptionPane.showMessageDialog(this, mgs, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    //-IA
+    public String getFrase() {
+        return fraseField.getText();
+    }
+    public void addExtraerListener(ActionListener actionListener) {
+        extraerButton.addActionListener(actionListener);
+    }
+    public void setActividad(String actividad) {
+        actividadField.setText(actividad);
+    }
+    public void setFecha(LocalDate fechaValor) {
+        fecha.setDate(fechaValor);
+    }
+    public void setHoraInicio(LocalTime hora) {
+        horaInicioField.setText(hora.format(FORMATO_HORA));
+    }
+    public void setHoraFinal(LocalTime hora) {
+        horaFinalField.setText(hora.format(FORMATO_HORA));
+    }
+    public void seleccionarCategorias(List<CategoriaRecurso> categorias) {
+        tablaCategorias.clearSelection();
+        for (int fila = 0; fila < categoriasTableModel.getRowCount(); fila++) {
+            CategoriaRecurso categoriaFila = categoriasTableModel.getFila(fila);
+            boolean coincide = categorias.stream().anyMatch(c -> c.getId().equals(categoriaFila.getId()));
+            if (coincide) {
+                tablaCategorias.addRowSelectionInterval(fila, fila);
+            }
+        }
     }
 }

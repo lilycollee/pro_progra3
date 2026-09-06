@@ -21,6 +21,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import logic.entities.ia.ReservaExtraccion;
 
 public class Controller {
     private ReservasView view;
@@ -48,6 +49,7 @@ public class Controller {
             }
         });
         view.addSeleccionReservaListener(e-> {if (!e.getValueIsAdjusting()) seleccionarFila();});
+        view.addExtraerIAListener(e -> extraerConIA());
 
         model.setCategorias(service.obtenerCategorias());
         actualizarListado();
@@ -192,6 +194,40 @@ public class Controller {
         int fila = view.getFilasReservaSeleccionada();
         if (fila >= 0) {
             model.setCurrent(model.getReservas().get(fila));
+        }
+    }
+
+    //-IA
+    private void extraerConIA() {
+        String frase = view.getFrase();
+        if (frase == null || frase.isBlank()) {
+            view.mostrarError("Escriba una descripción de la reserva primero.");
+            return;
+        }
+
+        try {
+            ReservaExtraccion extraccion = service.extraerReserva(frase);
+            aplicarExtraccion(extraccion);
+        } catch (Exception e) {
+            view.mostrarError("No se pudo procesar la frase con IA: " + e.getMessage());
+        }
+    }
+    private void aplicarExtraccion(ReservaExtraccion extraccion) {
+        if (extraccion.getActividad() != null) {
+            view.setActividad(extraccion.getActividad());
+        }
+        if (extraccion.getFecha() != null) {
+            view.setFecha(LocalDate.parse(extraccion.getFecha()));
+        }
+        if (extraccion.getHoraInicio() != null) {
+            view.setHoraInicio(LocalTime.parse(extraccion.getHoraInicio()));
+        }
+        if (extraccion.getHoraFinal() != null) {
+            view.setHoraFinal(LocalTime.parse(extraccion.getHoraFinal()));
+        }
+        if (extraccion.getCategoriasRecurso() != null) {
+            List<CategoriaRecurso> categoriasEncontradas = model.getCategorias().stream().filter(c -> extraccion.getCategoriasRecurso().contains(c.getDescripcion())).toList();
+            view.seleccionarCategorias(categoriasEncontradas);
         }
     }
 }
