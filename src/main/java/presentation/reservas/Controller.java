@@ -1,10 +1,26 @@
 package presentation.reservas;
 
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import logic.Service;
 import logic.entities.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+
+//-------- Pdf import's --------
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 
 public class Controller {
     private ReservasView view;
@@ -24,7 +40,13 @@ public class Controller {
         view.addReservarListener(e-> reservar());
         view.addLimpiarListener(e-> limpiar());
         view.addCancelarReservaListener(e-> cancelarReserva());
-        view.addImprimirListener(e -> imprimir());
+        view.addImprimirListener(e -> {
+            try {
+                imprimir();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         view.addSeleccionReservaListener(e-> {if (!e.getValueIsAdjusting()) seleccionarFila();});
 
         model.setCategorias(service.obtenerCategorias());
@@ -87,7 +109,80 @@ public class Controller {
         actualizarListado();
     }
     private void imprimir() {
-        view.mostrarError("Generación de PDF pendiente de implementar.");
+        try {
+            List<Reserva> reservas = service.obtenerReservasPorFuncionario(funcionarioActual.getId());
+            String dest = funcionarioActual.getId() + "_reservas.pdf";
+            PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+
+            Document document = new Document(pdf);
+            document.setMargins(20, 20, 20, 20);
+
+            Table header = new Table(1);
+            header.setWidth(400);
+            header.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            header.addCell(getCell(new Paragraph("Listado reservas - " + funcionarioActual.getId()).setFont(font).setBold().setFontSize(16), HorizontalAlignment.CENTER, false));
+            //header.addCell(getCell(new Image(ImageDataFactory.create(Application.class.getResource("/logo.png"))), HorizontalAlignment.CENTER, false));
+            document.add(header);
+
+            Table tabla = new Table(new float[]{1, 2, 1, 2, 3, 1});
+            tabla.setWidth(UnitValue.createPercentValue(100));
+            tabla.addHeaderCell(getCell(new Paragraph("ID").setFont(font).setBold(), HorizontalAlignment.LEFT, true));
+            tabla.addHeaderCell(getCell(new Paragraph("Actividad").setFont(font).setBold(), HorizontalAlignment.LEFT, true));
+            tabla.addHeaderCell(getCell(new Paragraph("Fecha").setFont(font).setBold(), HorizontalAlignment.LEFT, true));
+            tabla.addHeaderCell(getCell(new Paragraph("Horario").setFont(font).setBold(), HorizontalAlignment.LEFT, true));
+            tabla.addHeaderCell(getCell(new Paragraph("Recursos").setFont(font).setBold(), HorizontalAlignment.LEFT, true));
+            tabla.addHeaderCell(getCell(new Paragraph("Estado").setFont(font).setBold(), HorizontalAlignment.LEFT, true));
+
+            for (Reserva reserva : reservas) {
+                String horario = reserva.getHoraInicio() + " - " + reserva.getHoraFin();
+                StringBuilder recursosTexto = new StringBuilder();
+                for (DetalleReserva detalle : reserva.getDetalles()) {
+                    if (detalle.getRecursoAsignado() != null) {
+                        recursosTexto.append(detalle.getRecursoAsignado().getDescripcion());
+                    } else {
+                        recursosTexto.append(detalle.getCategoriaSolicitada().getDescripcion()).append(" (pendiente)");
+                    }
+                    recursosTexto.append(", ");
+                }
+                if (recursosTexto.length() > 0) {
+                    recursosTexto.setLength(recursosTexto.length() - 2);
+                }
+
+                tabla.addCell(getCell(new Paragraph(reserva.getId()).setFont(font), HorizontalAlignment.LEFT, true));
+                tabla.addCell(getCell(new Paragraph(reserva.getActividad()).setFont(font), HorizontalAlignment.LEFT, true));
+                tabla.addCell(getCell(new Paragraph(reserva.getFecha().toString()).setFont(font), HorizontalAlignment.LEFT, true));
+                tabla.addCell(getCell(new Paragraph(horario).setFont(font), HorizontalAlignment.LEFT, true));
+                tabla.addCell(getCell(new Paragraph(recursosTexto.toString()).setFont(font), HorizontalAlignment.LEFT, true));
+                tabla.addCell(getCell(new Paragraph(reserva.getEstado()).setFont(font), HorizontalAlignment.LEFT, true));
+            }
+
+            document.add(tabla);
+            document.close();
+            view.mostrarMensaje("PDF generado: " + dest);
+        } catch (Exception e) {
+            view.mostrarError("Error al generar el PDF: " + e.getMessage());
+        }
+    }
+
+    private Cell getCell(Paragraph texto, HorizontalAlignment aligment, boolean hasBorder) {
+        Cell cell = new Cell().add(texto);
+        texto.setHorizontalAlignment(aligment);
+        cell.setPadding(0);
+        if (!hasBorder) {
+            cell.setBorder(Border.NO_BORDER);
+        }
+        return cell;
+    }
+    private Cell getCell(Image image, HorizontalAlignment aligment, boolean hasBorder) {
+        Cell cell = new Cell().add(image);
+        image.setHorizontalAlignment(aligment);
+        cell.setPadding(0);
+        if (!hasBorder) {
+            cell.setBorder(Border.NO_BORDER);
+        }
+        return cell;
     }
     private void limpiar() {
         model.setCurrent(new  Reserva());
