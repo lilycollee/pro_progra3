@@ -133,13 +133,6 @@ public class Controller {
         return cell;
     }
 
-    // Overload para Image, porque Image no implementa IBlockElement en iText7
-    private Cell getCell(Image imagen) {
-        Cell cell = new Cell();
-        cell.add(imagen);
-        cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }
     private void seleccionarFila(){
         int fila = view.getFilaSeleccionada();
         if (fila >= 0){

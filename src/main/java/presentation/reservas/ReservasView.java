@@ -137,4 +137,7 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
     public void mostrarError(String mgs){
         JOptionPane.showMessageDialog(this, mgs, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    public void mostrarMensaje(String mgs){
+        JOptionPane.showMessageDialog(this, mgs, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
