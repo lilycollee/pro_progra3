@@ -35,6 +35,25 @@ public class MainView extends JFrame {
             new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
             pestañas.addTab("Estadísticas", estadisticasView);
 
+            //-Recursos pestaña
+            presentation.recursos.RecursosView recursosView = new presentation.recursos.RecursosView();
+            presentation.recursos.Model recursosModel = new presentation.recursos.Model();
+            presentation.recursos.Controller recursosController =
+                    new presentation.recursos.Controller(recursosView, recursosModel, service);
+            pestañas.addTab("Recursos", recursosView);
+
+            //-Categorías pestaña
+            presentation.categorias.CategoriasView categoriasView = new presentation.categorias.CategoriasView();
+            presentation.categorias.Model categoriasModel = new presentation.categorias.Model();
+            new presentation.categorias.Controller(
+                    categoriasView,
+                    categoriasModel,
+                    service,
+                    recursosController::actualizarCategorias
+            );
+            pestañas.addTab("Categorías", categoriasView);
+
+
         } else if (usuarioActual.getRole().equals(Rol.FUNCIONARIO)) {
             //-Reservas pestaña
             ReservasView reservasView = new ReservasView();
