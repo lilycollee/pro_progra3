@@ -106,6 +106,10 @@ public class Service {
         return data.getRecursos();
     }
 
+    public List<Recurso> obtenerRecursosPorCategoria(String idCategoria) {
+        return data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
+    }
+
     // ---------- Categorías ----------
 
     public List<CategoriaRecurso> obtenerCategorias() {
@@ -184,6 +188,12 @@ public class Service {
             }
         }
         return false;
+    }
+
+    public List<Reserva> obtenerReservasPorFechaYCategoria(LocalDate fecha, String idCategoria) {
+        return data.getReservas().stream().filter(r -> r.getEstado().equals(EstadoReserva.ACTIVA)).filter(r -> r.getFecha().equals(fecha))
+                .filter(r -> r.getDetalles().stream().anyMatch(d -> d.getRecursoAsignado() != null &&
+                        d.getRecursoAsignado().getCategoriaRecurso().getId().equals(idCategoria))).toList();
     }
 
     // ---------- Cambiar clave ----------

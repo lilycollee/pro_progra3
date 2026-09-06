@@ -53,6 +53,10 @@ public class MainView extends JFrame {
             );
             pestañas.addTab("Categorías", categoriasView);
 
+            //-Calendarización pestaña
+            presentation.calendarizacion.CalendarizacionView calendarizacionView = new presentation.calendarizacion.CalendarizacionView();
+            new presentation.calendarizacion.Controller(calendarizacionView, new presentation.calendarizacion.Model(), service);
+            pestañas.addTab("Calendarización", calendarizacionView);
 
         } else if (usuarioActual.getRole().equals(Rol.FUNCIONARIO)) {
             //-Reservas pestaña
@@ -64,6 +68,11 @@ public class MainView extends JFrame {
             EstadisticasView estadisticasView = new EstadisticasView();
             new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
             pestañas.addTab("Estadísticas", estadisticasView);
+
+            //-Calendarización pestaña
+            presentation.calendarizacion.CalendarizacionView calendarizacionViewFuncionario = new presentation.calendarizacion.CalendarizacionView();
+            new presentation.calendarizacion.Controller(calendarizacionViewFuncionario, new presentation.calendarizacion.Model(), service);
+            pestañas.addTab("Calendarización", calendarizacionViewFuncionario);
         }
 
         this.add(pestañas);
