@@ -5,6 +5,7 @@ import logic.entities.Usuario;
 import logic.entities.Funcionario;
 import logic.entities.enums.Rol;
 
+import presentation.estadisticas.EstadisticasView;
 import presentation.funcionarios.FuncionarioView;
 import presentation.funcionarios.Controller;
 import presentation.funcionarios.Model;
@@ -24,32 +25,26 @@ public class MainView extends JFrame {
         pestañas = new JTabbedPane();
 
         if (usuarioActual.getRole().equals(Rol.ADMINISTRADOR)) {
+            //-Funcionario pestaña
             FuncionarioView funcionarioView = new FuncionarioView();
-            Model funcionarioModel = new Model();
-            new Controller(funcionarioView, funcionarioModel, service);
+            new presentation.funcionarios.Controller(funcionarioView, new presentation.funcionarios.Model(), service);
             pestañas.addTab("Funcionarios", funcionarioView);
 
-            presentation.recursos.RecursosView recursosView = new presentation.recursos.RecursosView();
-            presentation.recursos.Model recursosModel = new presentation.recursos.Model();
-            presentation.recursos.Controller recursosController =
-                    new presentation.recursos.Controller(recursosView, recursosModel, service);
-            pestañas.addTab("Recursos", recursosView);
-
-            presentation.categorias.CategoriasView categoriasView = new presentation.categorias.CategoriasView();
-            presentation.categorias.Model categoriasModel = new presentation.categorias.Model();
-            new presentation.categorias.Controller(
-                    categoriasView,
-                    categoriasModel,
-                    service,
-                    recursosController::actualizarCategorias
-            );
-            pestañas.addTab("Categorías", categoriasView);
+            //-Estadisticas pestaña
+            EstadisticasView estadisticasView = new EstadisticasView();
+            new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
+            pestañas.addTab("Estadísticas", estadisticasView);
 
         } else if (usuarioActual.getRole().equals(Rol.FUNCIONARIO)) {
-            presentation.reservas.ReservasView reservasView = new ReservasView();
-            presentation.reservas.Model reservasModel = new presentation.reservas.Model();
-            new presentation.reservas.Controller(reservasView, reservasModel, service, (Funcionario) usuarioActual);
+            //-Reservas pestaña
+            ReservasView reservasView = new ReservasView();
+            new presentation.reservas.Controller(reservasView, new presentation.reservas.Model(), service, (Funcionario) usuarioActual);
             pestañas.addTab("Reservas", reservasView);
+
+            //-Estadisticas pestaña
+            EstadisticasView estadisticasView = new EstadisticasView();
+            new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
+            pestañas.addTab("Estadísticas", estadisticasView);
         }
 
         this.add(pestañas);

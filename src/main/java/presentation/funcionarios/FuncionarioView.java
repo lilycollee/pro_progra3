@@ -49,11 +49,6 @@ public class FuncionarioView extends JPanel implements PropertyChangeListener {
         model.addPropertyChangeListener(this);
     }
 
-    public void mostrarListado(List<Funcionario> funcionarios){
-        tableModel.setDatos(funcionarios);
-        tableModel.fireTableDataChanged();
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
