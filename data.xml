@@ -74,6 +74,22 @@
                 <descripcion>Salas de reunión</descripcion>
             </categoriaRecurso>
         </recursos>
+        <recursos>
+            <id>REC005</id>
+            <descripcion>Computador 1</descripcion>
+            <categoriaRecurso>
+                <id>CAT003</id>
+                <descripcion>Computadoras</descripcion>
+            </categoriaRecurso>
+        </recursos>
+        <recursos>
+            <id>REC006</id>
+            <descripcion>Parlante 1</descripcion>
+            <categoriaRecurso>
+                <id>CAT004</id>
+                <descripcion>Parlantes</descripcion>
+            </categoriaRecurso>
+        </recursos>
     </recursos>
     <reservas>
         <reservas>
