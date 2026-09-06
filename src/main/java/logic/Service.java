@@ -5,11 +5,17 @@ import data.XmlPersister;
 import logic.entities.*;
 import logic.entities.enums.EstadoReserva;
 
+import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.service.AiServices;
+import logic.entities.ia.ReservaExtraccion;
+import logic.entities.ia.ReservaExtractorService;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Map;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Service {
     private Data data;
@@ -238,4 +244,22 @@ public class Service {
         return resultado;
     }
 
+    //---------- IA ----------
+    public ReservaExtraccion extraerReserva(String frase) {
+        OpenAiChatModel aiModel = OpenAiChatModel.builder()
+                .baseUrl("http://langchain4j.dev/demo/openai/v1")
+                .apiKey("demo")
+                .modelName("gpt-4o-mini")
+                .build();
+
+        ReservaExtractorService aiService = AiServices.create(ReservaExtractorService.class, aiModel);
+
+        String listaCategorias = formatearCategorias(data.getCategorias().stream()
+                .map(CategoriaRecurso::getDescripcion).collect(Collectors.toList()));
+
+        return aiService.extraer(frase, listaCategorias, LocalDate.now().toString());
+    }
+    private String formatearCategorias(List<String> descripciones) {
+        return String.join(", ", descripciones);
+    }
 }
