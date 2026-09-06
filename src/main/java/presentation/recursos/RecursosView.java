@@ -19,6 +19,7 @@ public class RecursosView extends JPanel implements PropertyChangeListener {
     private JComboBox<CategoriaRecurso> categoriaCombo;
     private JButton guardarButton;
     private JButton limpiarButton;
+    private JButton imprimirButton;
     private JTable tablaRecursos;
 
     private Controller controller;
@@ -97,6 +98,10 @@ public class RecursosView extends JPanel implements PropertyChangeListener {
 
     public void addLimpiarListener(ActionListener listener) {
         limpiarButton.addActionListener(listener);
+    }
+
+    public void addImprimirListener(ActionListener listener) {
+        imprimirButton.addActionListener(listener);
     }
 
     public void addSeleccionListener(ListSelectionListener listener) {

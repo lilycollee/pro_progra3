@@ -16,6 +16,7 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
     private JTextField descripcionCategoria;
     private JButton guardarButton;
     private JButton limpiarButton;
+    private JButton imprimirButton;
     private JTable tablaCategorias;
 
     private Controller controller;
@@ -63,6 +64,10 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
 
     public void addLimpiarButtonListener(ActionListener listener) {
         limpiarButton.addActionListener(listener);
+    }
+
+    public void addImprimirButtonListener(ActionListener listener) {
+        imprimirButton.addActionListener(listener);
     }
 
     public void addSeleccionListener(ListSelectionListener listener) {
