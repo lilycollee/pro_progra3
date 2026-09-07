@@ -14,6 +14,9 @@ import java.util.List;
 
 public class RecursosView extends JPanel implements PropertyChangeListener {
     private JPanel panel;
+    private JTextField idBusqueda;
+    private JTextField descripcionBusqueda;
+    private JButton buscarButton;
     private JTextField idField;
     private JTextField descripcionField;
     private JComboBox<CategoriaRecurso> categoriaCombo;
@@ -92,6 +95,10 @@ public class RecursosView extends JPanel implements PropertyChangeListener {
         categoriaCombo.setSelectedItem(recurso.getCategoriaRecurso());
     }
 
+    public void addBuscarListener(ActionListener listener) {
+        buscarButton.addActionListener(listener);
+    }
+
     public void addGuardarListener(ActionListener listener) {
         guardarButton.addActionListener(listener);
     }
@@ -106,6 +113,14 @@ public class RecursosView extends JPanel implements PropertyChangeListener {
 
     public void addSeleccionListener(ListSelectionListener listener) {
         tablaRecursos.getSelectionModel().addListSelectionListener(listener);
+    }
+
+    public String getIdBusqueda() {
+        return idBusqueda.getText().trim();
+    }
+
+    public String getDescripcionBusqueda() {
+        return descripcionBusqueda.getText().trim();
     }
 
     public String getId() {

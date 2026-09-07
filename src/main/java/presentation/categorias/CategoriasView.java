@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 public class CategoriasView extends JPanel implements PropertyChangeListener {
     private JPanel panel;
+    private JTextField idBusqueda;
+    private JTextField descripcionBusqueda;
+    private JButton buscarButton;
     private JTextField idCategoria;
     private JTextField descripcionCategoria;
     private JButton guardarButton;
@@ -58,6 +61,10 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
         descripcionCategoria.setText(categoria.getDescripcion() == null ? "" : categoria.getDescripcion());
     }
 
+    public void addBuscarButtonListener(ActionListener listener) {
+        buscarButton.addActionListener(listener);
+    }
+
     public void addGuardarButtonListener(ActionListener listener) {
         guardarButton.addActionListener(listener);
     }
@@ -72,6 +79,14 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
 
     public void addSeleccionListener(ListSelectionListener listener) {
         tablaCategorias.getSelectionModel().addListSelectionListener(listener);
+    }
+
+    public String getIdBusqueda() {
+        return idBusqueda.getText().trim();
+    }
+
+    public String getDescripcionBusqueda() {
+        return descripcionBusqueda.getText().trim();
     }
 
     public String getIdCategoria() {

@@ -31,6 +31,7 @@ public class Controller {
         view.setController(this);
         view.setModel(model);
 
+        view.addBuscarListener(e -> buscar());
         view.addGuardarListener(e -> guardar());
         view.addLimpiarListener(e -> limpiar());
         view.addImprimirListener(e -> {
@@ -54,6 +55,19 @@ public class Controller {
 
     public void actualizarCategorias() {
         model.setCategorias(service.obtenerCategorias());
+    }
+
+    private void buscar() {
+        String id = view.getIdBusqueda();
+        String descripcion = view.getDescripcionBusqueda();
+
+        var resultado = service.obtenerRecursos().stream()
+                .filter(r -> (id.isBlank() || (r.getId() != null && r.getId().contains(id)))
+                        && (descripcion.isBlank() || (r.getDescripcion() != null
+                        && r.getDescripcion().toLowerCase().contains(descripcion.toLowerCase()))))
+                .toList();
+
+        model.setRecursos(resultado);
     }
 
     private void guardar() {
