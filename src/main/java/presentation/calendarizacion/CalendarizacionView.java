@@ -17,6 +17,7 @@ public class CalendarizacionView extends JPanel implements PropertyChangeListene
     private JComboBox<CategoriaRecurso> categoriaCombo;
     private JButton consultarButton;
     private JTable tablaCalendario;
+    private JButton imprimirButton;
 
     private Controller controller;
     private Model model;
