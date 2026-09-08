@@ -138,6 +138,17 @@ public class Service {
         return data.getReservas();
     }
 
+    public List<Reserva> obtenerReservasSemana(LocalDate fechaDeLaSemana) {
+        LocalDate lunes = fechaDeLaSemana.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate domingo = lunes.plusDays(6);
+
+        return data.getReservas().stream()
+                .filter(r -> r.getEstado() != null && r.getEstado().equals(EstadoReserva.ACTIVA))
+                .filter(r -> r.getFecha() != null)
+                .filter(r -> !r.getFecha().isBefore(lunes) && !r.getFecha().isAfter(domingo))
+                .toList();
+    }
+
     public ResultadoReserva crearReserva(Reserva reservaSolicitada) {
         List<CategoriaRecurso> noDisponibles = new ArrayList<>();
         List<DetalleReserva> detallesAsignados = new ArrayList<>();

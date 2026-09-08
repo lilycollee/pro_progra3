@@ -58,6 +58,12 @@ public class MainView extends JFrame {
             new presentation.calendarizacion.Controller(calendarizacionView, new presentation.calendarizacion.Model(), service);
             pestañas.addTab("Calendarización", calendarizacionView);
 
+            //-Agenda pestaña
+            presentation.agenda.AgendaView agendaView = new presentation.agenda.AgendaView();
+            presentation.agenda.Model agendaModel = new presentation.agenda.Model();
+            new presentation.agenda.Controller(agendaView, agendaModel, service);
+            pestañas.addTab("Agenda semanal", agendaView);
+
         } else if (usuarioActual.getRole().equals(Rol.FUNCIONARIO)) {
             //-Reservas pestaña
             ReservasView reservasView = new ReservasView();
@@ -73,6 +79,12 @@ public class MainView extends JFrame {
             presentation.calendarizacion.CalendarizacionView calendarizacionViewFuncionario = new presentation.calendarizacion.CalendarizacionView();
             new presentation.calendarizacion.Controller(calendarizacionViewFuncionario, new presentation.calendarizacion.Model(), service);
             pestañas.addTab("Calendarización", calendarizacionViewFuncionario);
+
+            //-Agenda pestaña
+            presentation.agenda.AgendaView agendaView = new presentation.agenda.AgendaView();
+            presentation.agenda.Model agendaModel = new presentation.agenda.Model();
+            new presentation.agenda.Controller(agendaView, agendaModel, service);
+            pestañas.addTab("Agenda semanal", agendaView);
         }
 
         this.add(pestañas);
