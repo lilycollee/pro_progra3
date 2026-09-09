@@ -100,7 +100,14 @@ public class Service {
         return data.getRecursos().stream().filter(r -> r.getId().equals(id)).findFirst();
     }
     public List<Recurso> obtenerRecursos() {
-        return data.getRecursos();
+        List<Recurso> recursos = data.getRecursos();
+        for (Recurso recurso : recursos) {
+            if (recurso.getIdCategoria() != null && recurso.getCategoriaRecurso() == null) {
+                obtenerCategoria(recurso.getIdCategoria())
+                        .ifPresent(recurso::setCategoriaRecurso);
+            }
+        }
+        return recursos;
     }
     public List<Recurso> obtenerRecursosPorCategoria(String idCategoria) {
         return data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
