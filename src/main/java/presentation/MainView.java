@@ -89,8 +89,8 @@ public class MainView extends JFrame {
 
         this.add(pestañas);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(1000, 700));
-        this.setSize(1000, 700);
+        this.setMinimumSize(new Dimension(1200, 700));
+        this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
