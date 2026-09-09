@@ -3,7 +3,7 @@
     <administradores>
         <administrador>
             <id>admin</id>
-            <clave>123</clave>
+            <clave>admin</clave>
             <role>ADMINISTRADOR</role>
         </administrador>
     </administradores>
@@ -31,14 +31,6 @@
         <categorias>
             <id>CAT002</id>
             <descripcion>Salas de reunión</descripcion>
-        </categorias>
-        <categorias>
-            <id>CAT003</id>
-            <descripcion>Computadoras</descripcion>
-        </categorias>
-        <categorias>
-            <id>CAT004</id>
-            <descripcion>Parlantes</descripcion>
         </categorias>
     </categorias>
     <recursos>
@@ -74,337 +66,23 @@
                 <descripcion>Salas de reunión</descripcion>
             </categoriaRecurso>
         </recursos>
-        <recursos>
-            <id>REC005</id>
-            <descripcion>Computador 1</descripcion>
-            <categoriaRecurso>
-                <id>CAT003</id>
-                <descripcion>Computadoras</descripcion>
-            </categoriaRecurso>
-        </recursos>
-        <recursos>
-            <id>REC006</id>
-            <descripcion>Parlante 1</descripcion>
-            <categoriaRecurso>
-                <id>CAT004</id>
-                <descripcion>Parlantes</descripcion>
-            </categoriaRecurso>
-        </recursos>
     </recursos>
     <reservas>
         <reservas>
             <id>R1</id>
-            <actividad>Presentacion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-02</fecha>
-            <horaInicio>08:00</horaInicio>
-            <horaFin>09:00</horaFin>
-            <estado>CANCELADA</estado>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT001</id>
-                    <descripcion>Proyectores</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC001</id>
-                    <descripcion>Proyector Epson 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT001</id>
-                        <descripcion>Proyectores</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-        </reservas>
-        <reservas>
-            <id>R2</id>
-            <actividad>Presentacion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-02</fecha>
-            <horaInicio>08:00</horaInicio>
-            <horaFin>09:00</horaFin>
-            <estado>ACTIVA</estado>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT001</id>
-                    <descripcion>Proyectores</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC001</id>
-                    <descripcion>Proyector Epson 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT001</id>
-                        <descripcion>Proyectores</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-        </reservas>
-        <reservas>
-            <id>R3</id>
             <actividad>Reunion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-12</fecha>
-            <horaInicio>11:00</horaInicio>
-            <horaFin>13:00</horaFin>
+            <idFuncionario>f001</idFuncionario>
+            <fecha>2026-09-25</fecha>
+            <horaInicio>08:00</horaInicio>
+            <horaFin>10:00</horaFin>
             <estado>ACTIVA</estado>
             <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT001</id>
-                    <descripcion>Proyectores</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC001</id>
-                    <descripcion>Proyector Epson 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT001</id>
-                        <descripcion>Proyectores</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
+                <idCategoriaSolicitada>CAT001</idCategoriaSolicitada>
+                <idRecursoAsignado>REC001</idRecursoAsignado>
             </detalleReservas>
             <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT002</id>
-                    <descripcion>Salas de reunión</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC003</id>
-                    <descripcion>Sala A</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT002</id>
-                        <descripcion>Salas de reunión</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT003</id>
-                    <descripcion>Computadoras</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC005</id>
-                    <descripcion>Computador 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT003</id>
-                        <descripcion>Computadoras</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT004</id>
-                    <descripcion>Parlantes</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC006</id>
-                    <descripcion>Parlante 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT004</id>
-                        <descripcion>Parlantes</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-        </reservas>
-        <reservas>
-            <id>R4</id>
-            <actividad>reunion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-24</fecha>
-            <horaInicio>09:00</horaInicio>
-            <horaFin>16:00</horaFin>
-            <estado>ACTIVA</estado>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT001</id>
-                    <descripcion>Proyectores</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC001</id>
-                    <descripcion>Proyector Epson 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT001</id>
-                        <descripcion>Proyectores</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT004</id>
-                    <descripcion>Parlantes</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC006</id>
-                    <descripcion>Parlante 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT004</id>
-                        <descripcion>Parlantes</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-        </reservas>
-        <reservas>
-            <id>R5</id>
-            <actividad>Presentacion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-22</fecha>
-            <horaInicio>10:00</horaInicio>
-            <horaFin>11:00</horaFin>
-            <estado>ACTIVA</estado>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT002</id>
-                    <descripcion>Salas de reunión</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC003</id>
-                    <descripcion>Sala A</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT002</id>
-                        <descripcion>Salas de reunión</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT003</id>
-                    <descripcion>Computadoras</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC005</id>
-                    <descripcion>Computador 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT003</id>
-                        <descripcion>Computadoras</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT004</id>
-                    <descripcion>Parlantes</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC006</id>
-                    <descripcion>Parlante 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT004</id>
-                        <descripcion>Parlantes</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-        </reservas>
-        <reservas>
-            <id>R6</id>
-            <actividad>presentacion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-18</fecha>
-            <horaInicio>13:00</horaInicio>
-            <horaFin>17:00</horaFin>
-            <estado>ACTIVA</estado>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT001</id>
-                    <descripcion>Proyectores</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC001</id>
-                    <descripcion>Proyector Epson 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT001</id>
-                        <descripcion>Proyectores</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT002</id>
-                    <descripcion>Salas de reunión</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC003</id>
-                    <descripcion>Sala A</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT002</id>
-                        <descripcion>Salas de reunión</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT003</id>
-                    <descripcion>Computadoras</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC005</id>
-                    <descripcion>Computador 1</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT003</id>
-                        <descripcion>Computadoras</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
-            </detalleReservas>
-        </reservas>
-        <reservas>
-            <id>R6</id>
-            <actividad>Reunion</actividad>
-            <funcionario>
-                <id>f001</id>
-                <clave>f001</clave>
-                <role>FUNCIONARIO</role>
-                <nombre>Juan Pérez</nombre>
-                <telefono>8888-8888</telefono>
-            </funcionario>
-            <fecha>2026-09-15</fecha>
-            <horaInicio>13:00</horaInicio>
-            <horaFin>16:00</horaFin>
-            <estado>ACTIVA</estado>
-            <detalleReservas>
-                <categoriaSolicitada>
-                    <id>CAT002</id>
-                    <descripcion>Salas de reunión</descripcion>
-                </categoriaSolicitada>
-                <recursoAsignado>
-                    <id>REC003</id>
-                    <descripcion>Sala A</descripcion>
-                    <categoriaRecurso>
-                        <id>CAT002</id>
-                        <descripcion>Salas de reunión</descripcion>
-                    </categoriaRecurso>
-                </recursoAsignado>
+                <idCategoriaSolicitada>CAT002</idCategoriaSolicitada>
+                <idRecursoAsignado>REC003</idRecursoAsignado>
             </detalleReservas>
         </reservas>
     </reservas>

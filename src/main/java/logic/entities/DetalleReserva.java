@@ -5,26 +5,24 @@ import javax.xml.bind.annotation.XmlAccessType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DetalleReserva {
-    private CategoriaRecurso categoriaSolicitada;
-    private Recurso recursoAsignado;
+    private String idCategoriaSolicitada;
+    private String idRecursoAsignado;
 
-    public DetalleReserva(){}
-    public DetalleReserva(CategoriaRecurso categoriaSolicitada){
-        this.categoriaSolicitada = categoriaSolicitada;
+    public DetalleReserva() {}
+    public DetalleReserva(String idCategoriaSolicitada) {
+        this.idCategoriaSolicitada = idCategoriaSolicitada;
     }
-
-    public CategoriaRecurso getCategoriaSolicitada() {
-        return categoriaSolicitada;
+    public String getIdCategoriaSolicitada() {
+        return idCategoriaSolicitada;
     }
-    public Recurso getRecursoAsignado() {
-        return recursoAsignado;
+    public String getIdRecursoAsignado() {
+        return idRecursoAsignado;
     }
-    public void setRecursoAsignado(Recurso recursoAsignado) {
-        this.recursoAsignado = recursoAsignado;
+    public void setIdRecursoAsignado(String idRecursoAsignado) {
+        this.idRecursoAsignado = idRecursoAsignado;
     }
-
-    public String toString(){
-        String recurso = recursoAsignado.getId();
-        return recurso;
+    @Override
+    public String toString() {
+        return idRecursoAsignado;
     }
 }

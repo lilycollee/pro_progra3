@@ -19,9 +19,9 @@ public class Controller {
 
         view.setController(this);
         view.setModel(model);
+        view.getTableModel().setService(service);
 
         view.addConsultarListener(e -> consultar());
-
         model.setCategorias(service.obtenerCategorias());
     }
 

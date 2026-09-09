@@ -98,6 +98,9 @@ public class ReservasView extends JPanel implements PropertyChangeListener {
         extraerButton.addActionListener(actionListener);
     }
 
+    public ReservasTableModel getReservasTableModel() {
+        return reservasTableModel;
+    }
     public String getActividad() {
         return actividadField.getText();
     }

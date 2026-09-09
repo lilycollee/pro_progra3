@@ -37,6 +37,7 @@ public class Controller {
 
         view.setController(this);
         view.setModel(model);
+        view.getReservasTableModel().setService(service);
 
         view.addReservarListener(e-> reservar());
         view.addLimpiarListener(e-> limpiar());
@@ -63,7 +64,6 @@ public class Controller {
         LocalTime horaInicio = view.getHoraInicio();
         LocalTime horaFinal = view.getHoraFinal();
         var categorias = view.getCategoriasSeleccionadas();
-
         if (actividad.isBlank()){
             view.mostrarError("Ingrese la actividad de la reserva.");
         }
@@ -84,9 +84,9 @@ public class Controller {
             return;
         }
 
-        Reserva reserva = new Reserva(null, funcionarioActual,actividad,fecha,horaInicio,horaFinal);
+        Reserva reserva = new Reserva(null, funcionarioActual.getId(), actividad, fecha, horaInicio, horaFinal);
         for (CategoriaRecurso categoriaRecurso : categorias){
-            reserva.agregarDetalleReserva(new DetalleReserva(categoriaRecurso));
+            reserva.agregarDetalleReserva(new DetalleReserva(categoriaRecurso.getId()));
         }
         ResultadoReserva resultadoReserva = service.crearReserva(reserva);
         if (resultadoReserva.esExitosa()) {
@@ -125,7 +125,6 @@ public class Controller {
             header.setWidth(400);
             header.setHorizontalAlignment(HorizontalAlignment.CENTER);
             header.addCell(getCell(new Paragraph("Listado reservas - " + funcionarioActual.getId()).setFont(font).setBold().setFontSize(16), HorizontalAlignment.CENTER, false));
-            //header.addCell(getCell(new Image(ImageDataFactory.create(Application.class.getResource("/logo.png"))), HorizontalAlignment.CENTER, false));
             document.add(header);
 
             Table tabla = new Table(new float[]{1, 2, 1, 2, 3, 1});
@@ -141,10 +140,10 @@ public class Controller {
                 String horario = reserva.getHoraInicio() + " - " + reserva.getHoraFin();
                 StringBuilder recursosTexto = new StringBuilder();
                 for (DetalleReserva detalle : reserva.getDetalles()) {
-                    if (detalle.getRecursoAsignado() != null) {
-                        recursosTexto.append(detalle.getRecursoAsignado().getDescripcion());
+                    if (detalle.getIdRecursoAsignado() != null) {
+                        service.obtenerRecurso(detalle.getIdRecursoAsignado()).ifPresent(r -> recursosTexto.append(r.getDescripcion()));
                     } else {
-                        recursosTexto.append(detalle.getCategoriaSolicitada().getDescripcion()).append(" (pendiente)");
+                        service.obtenerCategoria(detalle.getIdCategoriaSolicitada()).ifPresent(c -> recursosTexto.append(c.getDescripcion()).append(" (pendiente)"));
                     }
                     recursosTexto.append(", ");
                 }

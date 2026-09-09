@@ -63,7 +63,7 @@ public class Service {
         return data.getFuncionarios();
     }
     public List<Reserva> obtenerReservasPorFuncionario(String idFuncionario) {
-        return data.getReservas().stream().filter(r -> r.getFuncionario().getId().equals(idFuncionario)).toList();
+        return data.getReservas().stream().filter(r -> r.getIdFuncionario().equals(idFuncionario)).toList();
     }
 
     //-------- Administradores --------
@@ -92,24 +92,31 @@ public class Service {
         guardarCambios();
         return recurso;
     }
-
     public void eliminarRecurso(String id) {
         data.getRecursos().removeIf(recurso -> recurso.getId().equals(id));
         guardarCambios();
     }
-
     public Optional<Recurso> obtenerRecurso(String id) {
         return data.getRecursos().stream().filter(r -> r.getId().equals(id)).findFirst();
     }
-
     public List<Recurso> obtenerRecursos() {
         return data.getRecursos();
     }
-
     public List<Recurso> obtenerRecursosPorCategoria(String idCategoria) {
         return data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
     }
-
+    public String obtenerRecursosAsignadosTexto(Reserva reserva) {
+        StringBuilder sb = new StringBuilder();
+        for (DetalleReserva detalle : reserva.getDetalles()) {
+            if (detalle.getIdRecursoAsignado() != null) {
+                obtenerRecurso(detalle.getIdRecursoAsignado()).ifPresent(r -> {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(r.getDescripcion());
+                });
+            }
+        }
+        return sb.toString();
+    }
     // ---------- Categorías ----------
 
     public List<CategoriaRecurso> obtenerCategorias() {
@@ -152,12 +159,13 @@ public class Service {
     public ResultadoReserva crearReserva(Reserva reservaSolicitada) {
         List<CategoriaRecurso> noDisponibles = new ArrayList<>();
         List<DetalleReserva> detallesAsignados = new ArrayList<>();
+
         for (DetalleReserva detalle : reservaSolicitada.getDetalles()) {
-            Recurso disponible = buscarRecursoDisponible(detalle.getCategoriaSolicitada(), reservaSolicitada);
+            Recurso disponible = buscarRecursoDisponible(detalle.getIdCategoriaSolicitada(), reservaSolicitada);
             if (disponible == null) {
-                noDisponibles.add(detalle.getCategoriaSolicitada());
+                obtenerCategoria(detalle.getIdCategoriaSolicitada()).ifPresent(noDisponibles::add);
             } else {
-                detalle.setRecursoAsignado(disponible);
+                detalle.setIdRecursoAsignado(disponible.getId());
                 detallesAsignados.add(detalle);
             }
         }
@@ -165,7 +173,14 @@ public class Service {
             return ResultadoReserva.fracaso(noDisponibles);
         }
         String id = "R" + (data.getReservas().size() + 1);
-        Reserva reserva = new Reserva(id, reservaSolicitada.getFuncionario(), reservaSolicitada.getActividad(), reservaSolicitada.getFecha(), reservaSolicitada.getHoraInicio(), reservaSolicitada.getHoraFin());
+        Reserva reserva = new Reserva(
+                id,
+                reservaSolicitada.getIdFuncionario(),
+                reservaSolicitada.getActividad(),
+                reservaSolicitada.getFecha(),
+                reservaSolicitada.getHoraInicio(),
+                reservaSolicitada.getHoraFin()
+        );
         for (DetalleReserva detalle : detallesAsignados) {
             reserva.agregarDetalleReserva(detalle);
         }
@@ -177,8 +192,8 @@ public class Service {
         data.getReservas().stream().filter(r -> r.getId().equals(id)).findFirst().ifPresent(Reserva::cancelarReserva);
         guardarCambios();
     }
-    private Recurso buscarRecursoDisponible(CategoriaRecurso categoria, Reserva nuevaReserva) {
-        List<Recurso> recursosDeCategoria = data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(categoria.getId())).toList();
+    private Recurso buscarRecursoDisponible(String idCategoria, Reserva nuevaReserva) {
+        List<Recurso> recursosDeCategoria = data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
         for (Recurso recurso : recursosDeCategoria) {
             if (!estaOcupado(recurso, nuevaReserva)) {
                 return recurso;
@@ -193,7 +208,7 @@ public class Service {
             boolean seSolapan = nuevaReserva.getHoraInicio().isBefore(existente.getHoraFin()) && existente.getHoraInicio().isBefore(nuevaReserva.getHoraFin());
             if (!seSolapan) continue;
             for (DetalleReserva detalle : existente.getDetalles()) {
-                if (detalle.getRecursoAsignado() != null && detalle.getRecursoAsignado().getId().equals(recurso.getId())) {
+                if (detalle.getIdRecursoAsignado() != null && detalle.getIdRecursoAsignado().equals(recurso.getId())) {
                     return true;
                 }
             }
@@ -202,9 +217,13 @@ public class Service {
     }
 
     public List<Reserva> obtenerReservasPorFechaYCategoria(LocalDate fecha, String idCategoria) {
-        return data.getReservas().stream().filter(r -> r.getEstado().equals(EstadoReserva.ACTIVA)).filter(r -> r.getFecha().equals(fecha))
-                .filter(r -> r.getDetalles().stream().anyMatch(d -> d.getRecursoAsignado() != null &&
-                        d.getRecursoAsignado().getCategoriaRecurso().getId().equals(idCategoria))).toList();
+        return data.getReservas().stream()
+                .filter(r -> r.getEstado().equals(EstadoReserva.ACTIVA))
+                .filter(r -> r.getFecha().equals(fecha))
+                .filter(r -> r.getDetalles().stream().anyMatch(d ->
+                        d.getIdRecursoAsignado() != null && obtenerRecurso(d.getIdRecursoAsignado())
+                                .map(rec -> rec.getCategoriaRecurso().getId().equals(idCategoria))
+                                .orElse(false))).toList();
     }
 
     // ---------- Cambiar clave ----------
@@ -237,10 +256,15 @@ public class Service {
     public List<EstadisticaItem> obtenerEstadisticasRecurso(LocalDate desde, LocalDate hasta) {
         Map<String, Long> conteo = new TreeMap<>();
         for (Reserva reserva : data.getReservas()) {
-            if(!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+            if (!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
             if (reserva.getFecha().isBefore(desde) || reserva.getFecha().isAfter(hasta)) continue;
-            for(DetalleReserva detalle : reserva.getDetalles()) {
-                String categoria = detalle.getRecursoAsignado() != null ? detalle.getRecursoAsignado().getCategoriaRecurso().getDescripcion() : detalle.getCategoriaSolicitada().getDescripcion();
+            for (DetalleReserva detalle : reserva.getDetalles()) {
+                String categoria;
+                if (detalle.getIdRecursoAsignado() != null) {
+                    categoria = obtenerRecurso(detalle.getIdRecursoAsignado()).map(r -> r.getCategoriaRecurso().getDescripcion()).orElse("N/A");
+                } else {
+                    categoria = obtenerCategoria(detalle.getIdCategoriaSolicitada()).map(CategoriaRecurso::getDescripcion).orElse("N/A");
+                }
                 conteo.merge(categoria, 1L, Long::sum);
             }
         }
@@ -283,4 +307,5 @@ public class Service {
     private String formatearCategorias(List<String> descripciones) {
         return String.join(", ", descripciones);
     }
+
 }

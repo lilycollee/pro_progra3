@@ -1,6 +1,7 @@
 package presentation.agenda;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import presentation.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -46,6 +47,10 @@ public class AgendaView extends JPanel implements PropertyChangeListener {
     public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
+    }
+
+    public AgendaTableModel getTableModel() {
+        return tableModel;
     }
 
     @Override
