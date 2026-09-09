@@ -1,5 +1,6 @@
 package presentation.calendarizacion;
 
+import logic.Service;
 import logic.entities.DetalleReserva;
 import logic.entities.Recurso;
 import logic.entities.Reserva;
@@ -10,39 +11,37 @@ import java.util.List;
 public class CalendarizacionTableModel extends AbstractTableModel {
     private List<Recurso> recursos;
     private List<Reserva> reservas;
+    private Service service;
 
     public CalendarizacionTableModel(List<Recurso> recursos, List<Reserva> reservas) {
         this.recursos = recursos;
         this.reservas = reservas;
     }
-
+    public void setService(Service service) {
+        this.service = service;
+    }
     public void setDatos(List<Recurso> recursos, List<Reserva> reservas) {
         this.recursos = recursos;
         this.reservas = reservas;
         fireTableStructureChanged();
     }
-
     @Override
     public int getRowCount() {
         return 24;
     }
-
     @Override
     public int getColumnCount() {
         return recursos == null ? 1 : recursos.size() + 1;
     }
-
     @Override
     public String getColumnName(int column) {
         if (column == 0) return "Hora";
         return recursos.get(column - 1).getDescripcion();
     }
-
     @Override
     public boolean isCellEditable(int row, int column) {
         return false;
     }
-
     @Override
     public Object getValueAt(int row, int column) {
         if (column == 0) {
@@ -52,14 +51,17 @@ public class CalendarizacionTableModel extends AbstractTableModel {
         for (Reserva reserva : reservas) {
             if (!ocupaHora(reserva, row)) continue;
             for (DetalleReserva detalle : reserva.getDetalles()) {
-                if (detalle.getRecursoAsignado() != null && detalle.getRecursoAsignado().getId().equals(recurso.getId())) {
-                    return reserva.getActividad() + " - " + reserva.getFuncionario().getNombre();
+                if (detalle.getIdRecursoAsignado() != null && detalle.getIdRecursoAsignado().equals(recurso.getId())) {
+                    String nombreFuncionario = "Sin funcionario";
+                    if (service != null) {
+                        nombreFuncionario = service.obtenerFuncionario(reserva.getIdFuncionario()).map(f -> f.getNombre()).orElse("Sin funcionario");
+                    }
+                    return reserva.getActividad() + " - " + nombreFuncionario;
                 }
             }
         }
         return "";
     }
-
     private boolean ocupaHora(Reserva reserva, int hora) {
         LocalTime inicioHora = LocalTime.of(hora, 0);
         LocalTime finHora = hora == 23 ? LocalTime.MAX : LocalTime.of(hora + 1, 0);

@@ -14,12 +14,11 @@ import data.adapter.LocalTimeAdapter;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAccessType;
 
-
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Reserva {
     private String id;
     private String actividad;
-    private Funcionario funcionario;
+    private String idFuncionario;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fecha;
     @XmlJavaTypeAdapter(LocalTimeAdapter.class)
@@ -30,28 +29,27 @@ public class Reserva {
     private List<DetalleReserva> detalleReservas = new ArrayList<>();
 
     public Reserva() {}
-    public Reserva(String id, Funcionario funcionario, String actividad, LocalDate fecha,LocalTime horaInicio, LocalTime horaFin) {
+
+    public Reserva(String id, String idFuncionario, String actividad, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) {
         this.id = id;
-        this.funcionario = funcionario;
+        this.idFuncionario = idFuncionario;
         this.actividad = actividad;
         this.fecha = fecha;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.estado = EstadoReserva.ACTIVA;
     }
-
     public void agregarDetalleReserva(DetalleReserva detalleReserva) {
         this.detalleReservas.add(detalleReserva);
     }
     public void cancelarReserva(){
         this.estado = EstadoReserva.CANCELADA;
     }
-
     public String getId() {
         return id;
     }
-    public Funcionario getFuncionario() {
-        return funcionario;
+    public String getIdFuncionario() {
+        return idFuncionario;
     }
     public String getActividad() {
         return actividad;
@@ -70,15 +68,5 @@ public class Reserva {
     }
     public List<DetalleReserva> getDetalles() {
         return detalleReservas;
-    }
-    public String getRecursosAsignado() {
-        StringBuilder sb = new StringBuilder();
-        for (DetalleReserva detalleReserva : detalleReservas) {
-            if (detalleReserva.getRecursoAsignado() != null) {
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(detalleReserva.getRecursoAsignado().getDescripcion());
-            }
-        }
-        return sb.toString();
     }
 }

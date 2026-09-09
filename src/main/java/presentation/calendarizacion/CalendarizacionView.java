@@ -58,6 +58,10 @@ public class CalendarizacionView extends JPanel implements PropertyChangeListene
         model.addPropertyChangeListener(this);
     }
 
+    public CalendarizacionTableModel getTableModel() {
+        return tableModel;
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {

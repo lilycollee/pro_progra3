@@ -18,6 +18,7 @@ public class Controller {
 
         view.setController(this);
         view.setModel(model);
+        view.getTableModel().setService(service);
 
         view.addMostrarSemanaListener(e -> mostrarSemanaSeleccionada());
         view.addSemanaAnteriorListener(e -> cambiarSemana(-1));

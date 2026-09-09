@@ -1,5 +1,6 @@
 package presentation.agenda;
 
+import logic.Service;
 import logic.entities.Reserva;
 
 import javax.swing.table.AbstractTableModel;
@@ -13,10 +14,15 @@ public class AgendaTableModel extends AbstractTableModel {
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM");
     private LocalDate inicioSemana;
     private List<Reserva> reservas;
+    private Service service;
 
     public AgendaTableModel() {
         inicioSemana = LocalDate.now();
         reservas = new ArrayList<>();
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public void setDatos(LocalDate inicioSemana, List<Reserva> reservas) {
@@ -58,18 +64,14 @@ public class AgendaTableModel extends AbstractTableModel {
         for (Reserva reserva : reservas) {
             if (reserva.getFecha() == null || !reserva.getFecha().equals(fecha)) continue;
             if (reserva.getHoraInicio() == null || reserva.getHoraFin() == null) continue;
-
-            boolean seSolapa = reserva.getHoraInicio().isBefore(finBloque)
-                    && reserva.getHoraFin().isAfter(inicioBloque);
-
+            boolean seSolapa = reserva.getHoraInicio().isBefore(finBloque) && reserva.getHoraFin().isAfter(inicioBloque);
             if (seSolapa) {
                 if (actividades.length() > 0) actividades.append("\n");
-                String funcionario = reserva.getFuncionario() == null
-                        ? "Sin funcionario"
-                        : reserva.getFuncionario().getNombre();
-                actividades.append(reserva.getActividad())
-                        .append(" - ")
-                        .append(funcionario);
+                String funcionario = "Sin funcionario";
+                if (service != null && reserva.getIdFuncionario() != null) {
+                    funcionario = service.obtenerFuncionario(reserva.getIdFuncionario()).map(f -> f.getNombre()).orElse("Sin funcionario");
+                }
+                actividades.append(reserva.getActividad()).append(" - ").append(funcionario);
             }
         }
         return actividades.toString();
