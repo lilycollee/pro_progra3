@@ -9,20 +9,6 @@
     </administradores>
     <funcionarios>
         <funcionarios>
-            <id>f001</id>
-            <clave>f001</clave>
-            <role>FUNCIONARIO</role>
-            <nombre>Juan Pérez</nombre>
-            <telefono>8888-8888</telefono>
-        </funcionarios>
-        <funcionarios>
-            <id>f002</id>
-            <clave>f002</clave>
-            <role>FUNCIONARIO</role>
-            <nombre>María Rodríguez</nombre>
-            <telefono>8888-9999</telefono>
-        </funcionarios>
-        <funcionarios>
             <id>f003</id>
             <clave>f003</clave>
             <role>FUNCIONARIO</role>
@@ -49,6 +35,20 @@
             <role>FUNCIONARIO</role>
             <nombre>Paola Castro</nombre>
             <telefono>8666-7788</telefono>
+        </funcionarios>
+        <funcionarios>
+            <id>f002</id>
+            <clave>f002</clave>
+            <role>FUNCIONARIO</role>
+            <nombre>María Rodríguez</nombre>
+            <telefono>8688-9234</telefono>
+        </funcionarios>
+        <funcionarios>
+            <id>f001</id>
+            <clave>f001</clave>
+            <role>FUNCIONARIO</role>
+            <nombre>Juan Pérez</nombre>
+            <telefono>4704-4739</telefono>
         </funcionarios>
     </funcionarios>
     <categorias>
@@ -162,6 +162,11 @@
             <id>REC017</id>
             <descripcion>Módem 4G/5G portátil</descripcion>
             <idCategoria>CAT006</idCategoria>
+        </recursos>
+        <recursos>
+            <id>REC018</id>
+            <descripcion>Sala de 10 personas</descripcion>
+            <idCategoria>CAT002</idCategoria>
         </recursos>
     </recursos>
     <reservas>
