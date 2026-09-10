@@ -1,6 +1,8 @@
 package presentation.login;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CambiarClaveView extends JDialog {
     private JPanel panel1;
@@ -9,6 +11,7 @@ public class CambiarClaveView extends JDialog {
     private JPasswordField claveNuevaField;
     private JPasswordField claveConfirmarField;
     private JButton cambiarButton;
+    private JButton cancelarButton;
     private Controller controller;
 
     public CambiarClaveView(JFrame parent, String idPrellenado) {
@@ -24,6 +27,9 @@ public class CambiarClaveView extends JDialog {
             String claveNueva = new String(claveNuevaField.getPassword());
             String claveConfirmar = new String(claveConfirmarField.getPassword());
             controller.cambiarClave(this, id, claveActual, claveNueva, claveConfirmar);
+        });
+        cancelarButton.addActionListener(e-> {
+            dispose();
         });
     }
 
