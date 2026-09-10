@@ -15,6 +15,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <icon value="iconos/loginDialog.png"/>
           <text value="Identificador"/>
         </properties>
       </component>
@@ -31,6 +32,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <icon value="iconos/clave.png"/>
           <text value="Clave"/>
         </properties>
       </component>
@@ -47,6 +49,7 @@
           <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <icon value="iconos/login.png"/>
           <text value="Ingresar"/>
         </properties>
       </component>
