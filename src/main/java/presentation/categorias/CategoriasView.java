@@ -19,6 +19,7 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
     private JTextField descripcionCategoria;
     private JButton guardarButton;
     private JButton limpiarButton;
+    private JButton eliminarButton;
     private JButton imprimirButton;
     private JTable tablaCategorias;
 
@@ -73,6 +74,10 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
         limpiarButton.addActionListener(listener);
     }
 
+    public void addEliminarButtonListener(ActionListener listener) {
+        eliminarButton.addActionListener(listener);
+    }
+
     public void addImprimirButtonListener(ActionListener listener) {
         imprimirButton.addActionListener(listener);
     }
@@ -109,5 +114,15 @@ public class CategoriasView extends JPanel implements PropertyChangeListener {
 
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public boolean confirmarEliminacion(String mensaje) {
+        return JOptionPane.showConfirmDialog(
+                this, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION
+        ) == JOptionPane.YES_OPTION;
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 }

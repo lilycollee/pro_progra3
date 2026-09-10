@@ -87,14 +87,32 @@ public class Service {
     // ---------- Recursos ----------
 
     public Recurso guardarRecurso(Recurso recurso) {
-        eliminarRecurso(recurso.getId());
+        eliminarRecursoInterno(recurso.getId());
         data.getRecursos().add(recurso);
         guardarCambios();
         return recurso;
     }
-    public void eliminarRecurso(String id) {
+
+    private void eliminarRecursoInterno(String id) {
         data.getRecursos().removeIf(recurso -> recurso.getId().equals(id));
-        guardarCambios();
+    }
+
+    public boolean recursoEnReservaActiva(String idRecurso) {
+        return data.getReservas().stream()
+                .filter(r -> EstadoReserva.ACTIVA.equals(r.getEstado()))
+                .flatMap(r -> r.getDetalles().stream())
+                .anyMatch(d -> idRecurso.equals(d.getIdRecursoAsignado()));
+    }
+
+    public boolean eliminarRecurso(String id) {
+        if (recursoEnReservaActiva(id)) {
+            return false;
+        }
+        boolean eliminado = data.getRecursos().removeIf(recurso -> recurso.getId().equals(id));
+        if (eliminado) {
+            guardarCambios();
+        }
+        return eliminado;
     }
     public Optional<Recurso> obtenerRecurso(String id) {
         return data.getRecursos().stream().filter(r -> r.getId().equals(id)).findFirst();
@@ -130,15 +148,34 @@ public class Service {
         return data.getCategorias();
     }
     public CategoriaRecurso guardarCategoria(CategoriaRecurso categoria) {
-        eliminarCategoria(categoria.getId());
+        eliminarCategoriaInterno(categoria.getId());
         data.getCategorias().add(categoria);
         guardarCambios();
         return categoria;
     }
 
-    public void eliminarCategoria(String id) {
+    private void eliminarCategoriaInterno(String id) {
         data.getCategorias().removeIf(categoria -> categoria.getId().equals(id));
-        guardarCambios();
+    }
+
+    public boolean categoriaTieneRecursoEnReservaActiva(String idCategoria) {
+        return data.getRecursos().stream()
+                .filter(r -> idCategoria.equals(r.getIdCategoria()))
+                .anyMatch(r -> recursoEnReservaActiva(r.getId()));
+    }
+
+    public boolean eliminarCategoria(String id) {
+        if (categoriaTieneRecursoEnReservaActiva(id)) {
+            return false;
+        }
+
+        data.getRecursos().removeIf(recurso -> id.equals(recurso.getIdCategoria()));
+        boolean eliminada = data.getCategorias().removeIf(categoria -> categoria.getId().equals(id));
+
+        if (eliminada) {
+            guardarCambios();
+        }
+        return eliminada;
     }
 
     public Optional<CategoriaRecurso> obtenerCategoria(String id) {

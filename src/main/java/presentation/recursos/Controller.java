@@ -34,6 +34,7 @@ public class Controller {
         view.addBuscarListener(e -> buscar());
         view.addGuardarListener(e -> guardar());
         view.addLimpiarListener(e -> limpiar());
+        view.addEliminarListener(e -> eliminar());
         view.addImprimirListener(e -> {
             try {
                 imprimir();
@@ -90,6 +91,31 @@ public class Controller {
 
         limpiar();
         actualizarListado();
+    }
+
+    private void eliminar() {
+        Recurso seleccionado = model.getCurrent();
+        if (seleccionado == null || seleccionado.getId() == null || seleccionado.getId().isBlank()) {
+            view.mostrarError("Seleccione un recurso de la tabla para eliminar.");
+            return;
+        }
+
+        if (service.recursoEnReservaActiva(seleccionado.getId())) {
+            view.mostrarError("No se puede eliminar el recurso porque está siendo usado por una reserva activa.");
+            return;
+        }
+
+        if (!view.confirmarEliminacion("¿Desea eliminar el recurso " + seleccionado.getDescripcion() + "?")) {
+            return;
+        }
+
+        if (service.eliminarRecurso(seleccionado.getId())) {
+            limpiar();
+            actualizarListado();
+            view.mostrarMensaje("Recurso eliminado correctamente.");
+        } else {
+            view.mostrarError("No se pudo eliminar el recurso.");
+        }
     }
 
     private void limpiar() {

@@ -19,6 +19,7 @@ public class AgendaView extends JPanel implements PropertyChangeListener {
     private JButton mostrarSemanaButton;
     private JButton semanaAnteriorButton;
     private JButton semanaSiguienteButton;
+    private JButton imprimirButton;
     private JLabel rangoSemanaLabel;
     private JTable tablaAgenda;
 
@@ -92,6 +93,10 @@ public class AgendaView extends JPanel implements PropertyChangeListener {
         semanaSiguienteButton.addActionListener(listener);
     }
 
+    public void addImprimirListener(ActionListener listener) {
+        imprimirButton.addActionListener(listener);
+    }
+
     public LocalDate getFechaSeleccionada() {
         return fechaSemana.getDate();
     }
@@ -102,6 +107,10 @@ public class AgendaView extends JPanel implements PropertyChangeListener {
 
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
     }
 
     private static class AgendaCellRenderer extends JTextArea implements TableCellRenderer {

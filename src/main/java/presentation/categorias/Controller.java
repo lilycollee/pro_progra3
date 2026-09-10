@@ -39,6 +39,7 @@ public class Controller {
         view.addBuscarButtonListener(e -> buscar());
         view.addGuardarButtonListener(e -> guardar());
         view.addLimpiarButtonListener(e -> limpiar());
+        view.addEliminarButtonListener(e -> eliminar());
         view.addImprimirButtonListener(e -> {
             try {
                 imprimir();
@@ -86,6 +87,36 @@ public class Controller {
 
         if (alGuardarCategoria != null) {
             alGuardarCategoria.run();
+        }
+    }
+
+    private void eliminar() {
+        CategoriaRecurso seleccionada = model.getCurrent();
+        if (seleccionada == null || seleccionada.getId() == null || seleccionada.getId().isBlank()) {
+            view.mostrarError("Seleccione una categoría de la tabla para eliminar.");
+            return;
+        }
+
+        if (service.categoriaTieneRecursoEnReservaActiva(seleccionada.getId())) {
+            view.mostrarError("No se puede eliminar la categoría porque uno de sus recursos está siendo usado por una reserva activa.");
+            return;
+        }
+
+        if (!view.confirmarEliminacion(
+                "¿Desea eliminar la categoría " + seleccionada.getDescripcion() +
+                " y todos sus recursos?")) {
+            return;
+        }
+
+        if (service.eliminarCategoria(seleccionada.getId())) {
+            limpiar();
+            actualizarListado();
+            if (alGuardarCategoria != null) {
+                alGuardarCategoria.run();
+            }
+            view.mostrarMensaje("Categoría y sus recursos eliminados correctamente.");
+        } else {
+            view.mostrarError("No se pudo eliminar la categoría.");
         }
     }
 
