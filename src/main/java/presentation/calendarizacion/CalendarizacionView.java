@@ -4,6 +4,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import logic.entities.CategoriaRecurso;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -45,6 +46,12 @@ public class CalendarizacionView extends JPanel implements PropertyChangeListene
                     setText("");
                 }
                 return this;
+            }
+        });
+        imprimirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.imprimir();
             }
         });
     }
@@ -94,3 +101,4 @@ public class CalendarizacionView extends JPanel implements PropertyChangeListene
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+
