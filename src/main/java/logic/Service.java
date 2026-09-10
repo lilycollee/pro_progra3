@@ -110,7 +110,7 @@ public class Service {
         return recursos;
     }
     public List<Recurso> obtenerRecursosPorCategoria(String idCategoria) {
-        return data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
+        return obtenerRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
     }
     public String obtenerRecursosAsignadosTexto(Reserva reserva) {
         StringBuilder sb = new StringBuilder();
@@ -200,7 +200,7 @@ public class Service {
         guardarCambios();
     }
     private Recurso buscarRecursoDisponible(String idCategoria, Reserva nuevaReserva) {
-        List<Recurso> recursosDeCategoria = data.getRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
+        List<Recurso> recursosDeCategoria = obtenerRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
         for (Recurso recurso : recursosDeCategoria) {
             if (!estaOcupado(recurso, nuevaReserva)) {
                 return recurso;
@@ -224,6 +224,7 @@ public class Service {
     }
 
     public List<Reserva> obtenerReservasPorFechaYCategoria(LocalDate fecha, String idCategoria) {
+        obtenerRecursos(); // fuerza a reconectar categoriaRecurso en todos los recursos antes de usarla abajo
         return data.getReservas().stream()
                 .filter(r -> r.getEstado().equals(EstadoReserva.ACTIVA))
                 .filter(r -> r.getFecha().equals(fecha))

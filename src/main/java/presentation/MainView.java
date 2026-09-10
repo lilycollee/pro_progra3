@@ -23,6 +23,7 @@ public class MainView extends JFrame {
         super("Sistema de Reserva de Recursos");
         service = new Service();
         pestañas = new JTabbedPane();
+        ImageIcon iconoCalendarizacion = new ImageIcon(getClass().getResource("/iconos/calendarizacion.png"));
 
         if (usuarioActual.getRole().equals(Rol.ADMINISTRADOR)) {
             //-Funcionario pestaña
@@ -56,7 +57,7 @@ public class MainView extends JFrame {
             //-Calendarización pestaña
             presentation.calendarizacion.CalendarizacionView calendarizacionView = new presentation.calendarizacion.CalendarizacionView();
             new presentation.calendarizacion.Controller(calendarizacionView, new presentation.calendarizacion.Model(), service);
-            pestañas.addTab("Calendarización", calendarizacionView);
+            pestañas.addTab("Calendarización", iconoCalendarizacion, calendarizacionView);
 
             //-Agenda pestaña
             presentation.agenda.AgendaView agendaView = new presentation.agenda.AgendaView();
@@ -78,7 +79,7 @@ public class MainView extends JFrame {
             //-Calendarización pestaña
             presentation.calendarizacion.CalendarizacionView calendarizacionViewFuncionario = new presentation.calendarizacion.CalendarizacionView();
             new presentation.calendarizacion.Controller(calendarizacionViewFuncionario, new presentation.calendarizacion.Model(), service);
-            pestañas.addTab("Calendarización", calendarizacionViewFuncionario);
+            pestañas.addTab("Calendarización", iconoCalendarizacion, calendarizacionViewFuncionario);
 
             //-Agenda pestaña
             presentation.agenda.AgendaView agendaView = new presentation.agenda.AgendaView();
