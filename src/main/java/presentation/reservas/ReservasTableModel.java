@@ -26,7 +26,7 @@ public class ReservasTableModel extends TableModel<Reserva> {
             case 1 -> reserva.getActividad();
             case 2 -> reserva.getFecha();
             case 3 -> reserva.getHoraInicio() + "-"  + reserva.getHoraFin();
-            case 4 -> service != null ? service.obtenerRecursosAsignadosTexto(reserva) : "";  // ✅ null-safe
+            case 4 -> service != null ? service.obtenerRecursosAsignadosTexto(reserva) : "";
             case 5 -> reserva.getEstado();
             default -> null;
         };
