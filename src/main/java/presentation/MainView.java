@@ -24,23 +24,25 @@ public class MainView extends JFrame {
         service = new Service();
         pestañas = new JTabbedPane();
         ImageIcon iconoCalendarizacion = new ImageIcon(getClass().getResource("/iconos/calendarizacion.png"));
+        ImageIcon iconoReservas = new ImageIcon(getClass().getResource("/iconos/reservas.png"));
+        ImageIcon iconoEstadisticas = new ImageIcon(getClass().getResource("/iconos/statistics.png"));
+        ImageIcon iconoFuncionarios = new ImageIcon(getClass().getResource("/iconos/funcionarios.png"));
 
         if (usuarioActual.getRole().equals(Rol.ADMINISTRADOR)) {
             //-Funcionario pestaña
             FuncionarioView funcionarioView = new FuncionarioView();
             new presentation.funcionarios.Controller(funcionarioView, new presentation.funcionarios.Model(), service);
-            pestañas.addTab("Funcionarios", funcionarioView);
+            pestañas.addTab("Funcionarios", iconoFuncionarios, funcionarioView);
 
             //-Estadisticas pestaña
             EstadisticasView estadisticasView = new EstadisticasView();
             new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
-            pestañas.addTab("Estadísticas", estadisticasView);
+            pestañas.addTab("Estadísticas", iconoEstadisticas, estadisticasView);
 
             //-Recursos pestaña
             presentation.recursos.RecursosView recursosView = new presentation.recursos.RecursosView();
             presentation.recursos.Model recursosModel = new presentation.recursos.Model();
-            presentation.recursos.Controller recursosController =
-                    new presentation.recursos.Controller(recursosView, recursosModel, service);
+            presentation.recursos.Controller recursosController = new presentation.recursos.Controller(recursosView, recursosModel, service);
             pestañas.addTab("Recursos", recursosView);
 
             //-Categorías pestaña
@@ -69,12 +71,12 @@ public class MainView extends JFrame {
             //-Reservas pestaña
             ReservasView reservasView = new ReservasView();
             new presentation.reservas.Controller(reservasView, new presentation.reservas.Model(), service, (Funcionario) usuarioActual);
-            pestañas.addTab("Reservas", reservasView);
+            pestañas.addTab("Reservas", iconoReservas ,reservasView);
 
             //-Estadisticas pestaña
             EstadisticasView estadisticasView = new EstadisticasView();
             new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
-            pestañas.addTab("Estadísticas", estadisticasView);
+            pestañas.addTab("Estadísticas", iconoEstadisticas,estadisticasView);
 
             //-Calendarización pestaña
             presentation.calendarizacion.CalendarizacionView calendarizacionViewFuncionario = new presentation.calendarizacion.CalendarizacionView();
