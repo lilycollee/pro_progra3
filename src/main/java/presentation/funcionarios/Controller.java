@@ -58,7 +58,9 @@ public class Controller {
             view.mostrarError("El ID y el Nombre son obligatorios.");
             return;
         }
-        service.guardarFuncionario(new Funcionario(id,nombre,telefono));
+        Funcionario funcionario = new Funcionario(id, nombre, telefono);
+        service.obtenerFuncionario(id).ifPresent(existente -> funcionario.cambiarClave(existente.getClave()));
+        service.guardarFuncionario(funcionario);
         limpiar();
         actualizarListado();
     }
