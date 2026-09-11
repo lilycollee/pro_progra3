@@ -56,7 +56,7 @@ public class Controller {
         actualizarListado();
     }
     private void actualizarListado() {
-        model.setReservas(service.obtenerReservas());
+        model.setReservas(service.obtenerReservasPorFuncionario(funcionarioActual.getId()));
     }
     private void reservar() {
         String actividad = view.getActividad();
