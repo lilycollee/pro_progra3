@@ -88,11 +88,24 @@ public class MainView extends JFrame {
             pestañas.addTab("Agenda semanal", agendaView);
         }
 
-        this.add(pestañas);
+        JButton cerrarSesionButton = new JButton("Cerrar sesión");
+        cerrarSesionButton.addActionListener(e -> cerrarSesion());
+        JPanel panelSuperior = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        panelSuperior.add(cerrarSesionButton);
+
+        this.add(panelSuperior, java.awt.BorderLayout.NORTH);
+        this.add(pestañas, java.awt.BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(1200, 700));
         this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    private void cerrarSesion() {
+        this.dispose();
+        presentation.login.LoginView loginView = new presentation.login.LoginView();
+        presentation.login.Model loginModel = new presentation.login.Model();
+        new presentation.login.Controller(loginView, loginModel, new Service());
+        loginView.setVisible(true);
     }
 }
