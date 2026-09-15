@@ -27,6 +27,9 @@ public class MainView extends JFrame {
         ImageIcon iconoReservas = new ImageIcon(getClass().getResource("/iconos/reservas.png"));
         ImageIcon iconoEstadisticas = new ImageIcon(getClass().getResource("/iconos/statistics.png"));
         ImageIcon iconoFuncionarios = new ImageIcon(getClass().getResource("/iconos/funcionarios.png"));
+        ImageIcon iconoCategorias = new ImageIcon(getClass().getResource("/iconos/categorias.png"));
+        ImageIcon iconoRecursos = new ImageIcon(getClass().getResource("/iconos/recursos.png"));
+        ImageIcon iconoAgenda = new ImageIcon(getClass().getResource("/iconos/actividades.png"));
 
         if (usuarioActual.getRole().equals(Rol.ADMINISTRADOR)) {
             //-Funcionario pestaña
@@ -43,7 +46,7 @@ public class MainView extends JFrame {
             presentation.recursos.RecursosView recursosView = new presentation.recursos.RecursosView();
             presentation.recursos.Model recursosModel = new presentation.recursos.Model();
             presentation.recursos.Controller recursosController = new presentation.recursos.Controller(recursosView, recursosModel, service);
-            pestañas.addTab("Recursos", recursosView);
+            pestañas.addTab("Recursos", iconoRecursos, recursosView);
 
             //-Categorías pestaña
             presentation.categorias.CategoriasView categoriasView = new presentation.categorias.CategoriasView();
@@ -54,7 +57,7 @@ public class MainView extends JFrame {
                     service,
                     recursosController::actualizarCategorias
             );
-            pestañas.addTab("Categorías", categoriasView);
+            pestañas.addTab("Categorías", iconoCategorias, categoriasView);
 
             //-Calendarización pestaña
             presentation.calendarizacion.CalendarizacionView calendarizacionView = new presentation.calendarizacion.CalendarizacionView();
@@ -65,7 +68,7 @@ public class MainView extends JFrame {
             presentation.agenda.AgendaView agendaView = new presentation.agenda.AgendaView();
             presentation.agenda.Model agendaModel = new presentation.agenda.Model();
             new presentation.agenda.Controller(agendaView, agendaModel, service);
-            pestañas.addTab("Agenda semanal", agendaView);
+            pestañas.addTab("Actividades", iconoAgenda, agendaView);
 
         } else if (usuarioActual.getRole().equals(Rol.FUNCIONARIO)) {
             //-Reservas pestaña
@@ -76,7 +79,7 @@ public class MainView extends JFrame {
             //-Estadisticas pestaña
             EstadisticasView estadisticasView = new EstadisticasView();
             new presentation.estadisticas.Controller(estadisticasView, new presentation.estadisticas.Model(), service);
-            pestañas.addTab("Estadísticas", iconoEstadisticas,estadisticasView);
+            pestañas.addTab("Estadísticas", iconoEstadisticas, estadisticasView);
 
             //-Calendarización pestaña
             presentation.calendarizacion.CalendarizacionView calendarizacionViewFuncionario = new presentation.calendarizacion.CalendarizacionView();
@@ -87,7 +90,7 @@ public class MainView extends JFrame {
             presentation.agenda.AgendaView agendaView = new presentation.agenda.AgendaView();
             presentation.agenda.Model agendaModel = new presentation.agenda.Model();
             new presentation.agenda.Controller(agendaView, agendaModel, service);
-            pestañas.addTab("Agenda semanal", agendaView);
+            pestañas.addTab("Agenda semanal", iconoAgenda, agendaView);
         }
 
         JButton cerrarSesionButton = new JButton("Cerrar sesión");

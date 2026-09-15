@@ -9,7 +9,15 @@ import java.io.FileInputStream;
 
 public class XmlPersister {
     private static XmlPersister instance;
-    private static final String DATA_FILE = "data.xml";
+    private final String dataFile;
+
+    private XmlPersister() {
+        this.dataFile = "data.xml";
+    }
+
+    public XmlPersister(String dataFile) {
+        this.dataFile = dataFile;
+    }
     public static XmlPersister instance() {
         if (instance == null) {
             instance = new XmlPersister();
@@ -22,7 +30,7 @@ public class XmlPersister {
             JAXBContext context = JAXBContext.newInstance(Data.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            File file = new File(DATA_FILE);
+            File file = new File(dataFile);
             marshaller.marshal(data, file);
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,14 +38,14 @@ public class XmlPersister {
     }
 
     public Data load() {
-        File file = new File(DATA_FILE);
+        File file = new File(dataFile);
         if (!file.exists()) {
             return new Data(); //cuando se corre el sistema por primera vez no hay un Xml
         }
         try {
             JAXBContext context = JAXBContext.newInstance(Data.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            FileInputStream in = new FileInputStream(DATA_FILE);
+            FileInputStream in = new FileInputStream(dataFile);
             Data data = (Data) unmarshaller.unmarshal(in);
             in.close();
             return data;
