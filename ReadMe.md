@@ -28,25 +28,25 @@ Proyecto desarrollado para el curso **EIF206 – Programación 3**.
 
 ## 📸 Capturas de pantalla
 
-| Login | Funcionarios |
-|---|---|
-| ![Login](docs/screenshots/login.png) | ![Cambio de contraseña](docs/screenshots/CambioDeContrasena.png)|
+| Login                                | Funcionarios |
+|--------------------------------------|---|
+| ![Login](docs/screenshots/Login.png) | ![Cambio de contraseña](docs/screenshots/CambioDeContrasena.png)|
 
-| Cambio de contraseña                                             | Categorías |
-|------------------------------------------------------------------|---|
-| ![Funcionarios](docs/screenshots/funcionarios.png) | ![Categorías](docs/screenshots/categorias.png) |
+| Cambio de contraseña                               | Categorías                                     |
+|----------------------------------------------------|------------------------------------------------|
+| ![Funcionarios](docs/screenshots/Funcionarios.png) | ![Categorías](docs/screenshots/Categorias.png) |
 
-| Recursos | Reservas |
-|---|---|
-| ![Recursos](docs/screenshots/recursos.png) | ![Reservas](docs/screenshots/reservas.png) |
+| Recursos                                   | Reservas                                   |
+|--------------------------------------------|--------------------------------------------|
+| ![Recursos](docs/screenshots/Recursos.png) | ![Reservas](docs/screenshots/Reservas.png) |
 
-| Calendarización | Agenda                                      |
-|---|---------------------------------------------|
-| ![Calendarización](docs/screenshots/calendarizacion.png) | ![Agenda](docs/screenshots/Actividades.png) |
+| Calendarización                                          | Agenda                                      |
+|----------------------------------------------------------|---------------------------------------------|
+| ![Calendarización](docs/screenshots/Calendarizacion.png) | ![Agenda](docs/screenshots/Actividades.png) |
 
-| Estadísticas | |
-|---|---|
-| ![Estadísticas](docs/screenshots/estadisticas.png) | |
+| Estadísticas                                       | |
+|----------------------------------------------------|---|
+| ![Estadísticas](docs/screenshots/Estadisticas.png) | |
 
 ---
 
