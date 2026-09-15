@@ -17,7 +17,7 @@ Proyecto desarrollado para el curso **EIF206 – Programación 3**.
 - **Gestión de Funcionarios** con dos roles: `Administrador` y `Funcionario`, controlando qué pestañas ve cada uno.
 - **Gestión de Categorías y Recursos** disponibles para reservar.
 - **Módulo de Reservas** con detección automática de conflictos de disponibilidad (fecha, horario y categoría solicitada).
-- **Calendarización / Agenda** para visualizar reservas por semana.
+- **Calendarización / Actividades** para visualizar reservas por semana.
 - **Estadísticas** con gráficos generados con JFreeChart (actividades y uso de recursos por rango de fechas).
 - **Generación de reportes en PDF** con iText7.
 - **Asistencia con IA** (LangChain4j + OpenAI) para extraer datos de reserva a partir de lenguaje natural.
@@ -28,25 +28,37 @@ Proyecto desarrollado para el curso **EIF206 – Programación 3**.
 
 ## 📸 Capturas de pantalla
 
-| Login                                | Funcionarios |
-|--------------------------------------|---|
-| ![Login](docs/screenshots/Login.png) | ![Cambio de contraseña](docs/screenshots/CambioDeContrasena.png)|
+| Login                                | Funcionarios                                                     |
+|--------------------------------------|------------------------------------------------------------------|
+| ![Login](docs/screenshots/Login.png) | ![Cambio de contraseña](docs/screenshots/CambioDeContrasena.png) |
 
-| Cambio de contraseña                               | Categorías                                     |
-|----------------------------------------------------|------------------------------------------------|
-| ![Funcionarios](docs/screenshots/Funcionarios.png) | ![Categorías](docs/screenshots/Categorias.png) |
+| Funcionarios                                       |
+|----------------------------------------------------|
+| ![Funcionarios](docs/screenshots/Funcionarios.png) |
 
-| Recursos                                   | Reservas                                   |
-|--------------------------------------------|--------------------------------------------|
-| ![Recursos](docs/screenshots/Recursos.png) | ![Reservas](docs/screenshots/Reservas.png) |
+| Cambio de contraseña                           |
+|------------------------------------------------|
+| ![Categorías](docs/screenshots/Categorias.png) |
 
-| Calendarización                                          | Agenda                                      |
-|----------------------------------------------------------|---------------------------------------------|
-| ![Calendarización](docs/screenshots/Calendarizacion.png) | ![Agenda](docs/screenshots/Actividades.png) |
+| Recursos                                   |
+|--------------------------------------------|
+| ![Recursos](docs/screenshots/Recursos.png) |
 
-| Estadísticas                                       | |
-|----------------------------------------------------|---|
-| ![Estadísticas](docs/screenshots/Estadisticas.png) | |
+| Reservas                                   |
+|--------------------------------------------|
+| ![Reservas](docs/screenshots/Reservas.png) |
+
+| Calendarización                                          |
+|----------------------------------------------------------|
+| ![Calendarización](docs/screenshots/Calendarizacion.png) |
+
+| Actividades                                      |
+|--------------------------------------------------|
+| ![Actividades](docs/screenshots/Actividades.png) |
+
+| Estadísticas                                       |
+|----------------------------------------------------|
+| ![Estadísticas](docs/screenshots/Estadisticas.png) |
 
 ---
 
