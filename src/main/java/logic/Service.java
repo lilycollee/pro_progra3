@@ -20,11 +20,15 @@ import java.util.stream.Collectors;
 public class Service {
     private Data data;
 
+    public Service(Data data) {
+        this.data = data;
+    }
+
     public Service() {
         data = XmlPersister.instance().load();
 
     }
-    private void guardarCambios(){
+    protected void guardarCambios(){
         XmlPersister.instance().store(data);
     }
     public Usuario autenticar(String id, String clave) {
