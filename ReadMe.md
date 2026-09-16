@@ -123,15 +123,15 @@ El proyecto sigue una arquitectura de **tres capas**, con un patrón **MVC** rep
 src/
 ├── main/
 │   ├── java/
-│   │   ├── data/            # Data.java, XmlPersister.java, adapters JAXB
-│   │   ├── logic/            # Service.java, entidades, enums
-│   │   └── presentation/     # Views, Controllers, MainView, Application.java
+│   │   ├── reservationSystem.data/            # Data.java, XmlPersister.java, adapters JAXB
+│   │   ├── reservationSystem.logic/            # Service.java, entidades, enums
+│   │   └── reservationSystem.presentation/     # Views, Controllers, MainView, reservationSystem.Application.java
 │   └── resources/
 │       └── iconos/           # Íconos cargados programáticamente (IconUtil)
 └── test/
     └── java/
-        ├── logic/             # Tests de unidad (*Test.java)
-        └── data/              # Tests de integración (*IT.java)
+        ├── reservationSystem.logic/             # Tests de unidad (*Test.java)
+        └── reservationSystem.data/              # Tests de integración (*IT.java)
 ```
 
 ---
@@ -149,15 +149,9 @@ src/
 # Clonar el repositorio
 git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
 cd TU_REPOSITORIO
-
-# Compilar
-mvn compile
-
-# Ejecutar la aplicación
-mvn exec:java -Dexec.mainClass="presentation.Application"
 ```
 
-> También puede ejecutarse directamente desde IntelliJ IDEA corriendo la clase `Application.java`.
+> Este proyecto usa el diseñador visual de formularios de IntelliJ IDEA para las pantallas Swing, por lo que se recomienda abrirlo y ejecutarlo directamente desde IntelliJ (clase `reservationSystem.Application`), en vez de `mvn compile` + `java` desde la terminal — el compilador estándar de Maven no instrumenta los `.form`.
 
 ### Credenciales de prueba (datos semilla)
 
