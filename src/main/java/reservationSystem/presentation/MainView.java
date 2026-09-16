@@ -87,7 +87,7 @@ public class MainView extends JFrame {
             reservationSystem.presentation.agenda.AgendaView agendaView = new reservationSystem.presentation.agenda.AgendaView();
             reservationSystem.presentation.agenda.Model agendaModel = new reservationSystem.presentation.agenda.Model();
             new reservationSystem.presentation.agenda.Controller(agendaView, agendaModel, service);
-            pestañas.addTab("Agenda semanal", agendaView);
+            pestañas.addTab("Agenda semanal", iconoAgenda, agendaView);
         }
 
         JButton cerrarSesionButton = new JButton("Cerrar sesión");

@@ -13,6 +13,7 @@ import java.util.List;
 
 //-------- Pdf import's --------
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -125,6 +126,7 @@ public class Controller {
             header.setWidth(400);
             header.setHorizontalAlignment(HorizontalAlignment.CENTER);
             header.addCell(getCell(new Paragraph("Listado reservas - " + funcionarioActual.getId()).setFont(font).setBold().setFontSize(16), HorizontalAlignment.CENTER, false));
+            header.addCell(getCell(new Image(ImageDataFactory.create(getClass().getResource("/iconos/reservas.png"))), HorizontalAlignment.CENTER, false));
             document.add(header);
 
             Table tabla = new Table(new float[]{1, 2, 1, 2, 3, 1});

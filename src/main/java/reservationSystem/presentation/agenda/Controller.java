@@ -1,6 +1,7 @@
 package reservationSystem.presentation.agenda;
 
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -8,9 +9,11 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import reservationSystem.logic.Service;
 
@@ -76,12 +79,19 @@ public class Controller {
             document.setMargins(18, 18, 18, 18);
 
             LocalDate finSemana = model.getInicioSemana().plusDays(6);
+            Table header = new Table(1);
+            header.setWidth(400);
+            header.setHorizontalAlignment(HorizontalAlignment.CENTER);
             Paragraph titulo = new Paragraph("Agenda semanal")
                     .setFont(font)
                     .setBold()
                     .setFontSize(16)
                     .setTextAlignment(TextAlignment.CENTER);
-            document.add(titulo);
+            header.addCell(new Cell().add(titulo).setBorder(com.itextpdf.layout.borders.Border.NO_BORDER));
+            Image logo = new Image(ImageDataFactory.create(getClass().getResource("/iconos/actividades.png")));
+            logo.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            header.addCell(new Cell().add(logo).setBorder(com.itextpdf.layout.borders.Border.NO_BORDER));
+            document.add(header);
 
             Paragraph rango = new Paragraph("Semana: "
                     + model.getInicioSemana().format(formatoFecha)
