@@ -303,6 +303,7 @@ public class Service {
 
     //---------- Estadísticas ----------
     public List<EstadisticaItem> obtenerEstadisticasRecurso(LocalDate desde, LocalDate hasta) {
+        obtenerRecursos();
         Map<String, Long> conteo = new TreeMap<>();
         for (Reserva reserva : data.getReservas()) {
             if (!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
@@ -310,7 +311,7 @@ public class Service {
             for (DetalleReserva detalle : reserva.getDetalles()) {
                 String categoria;
                 if (detalle.getIdRecursoAsignado() != null) {
-                    categoria = obtenerRecurso(detalle.getIdRecursoAsignado()).map(r -> r.getCategoriaRecurso().getDescripcion()).orElse("N/A");
+                    categoria = obtenerRecurso(detalle.getIdRecursoAsignado()).map(Recurso::getCategoriaRecurso).map(CategoriaRecurso::getDescripcion).orElse("N/A");
                 } else {
                     categoria = obtenerCategoria(detalle.getIdCategoriaSolicitada()).map(CategoriaRecurso::getDescripcion).orElse("N/A");
                 }

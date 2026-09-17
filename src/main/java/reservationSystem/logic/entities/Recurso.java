@@ -10,9 +10,7 @@ public class Recurso {
     private String idCategoria;
     private transient CategoriaRecurso categoriaRecurso;
 
-    public Recurso() {
-
-    }
+    public Recurso() {}
 
     public Recurso(String id, String descripcion, CategoriaRecurso categoriaRecurso) {
         this.id = id;
