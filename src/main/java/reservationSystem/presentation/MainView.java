@@ -65,7 +65,7 @@ public class MainView extends JFrame {
             reservationSystem.presentation.agenda.AgendaView agendaView = new reservationSystem.presentation.agenda.AgendaView();
             reservationSystem.presentation.agenda.Model agendaModel = new reservationSystem.presentation.agenda.Model();
             new reservationSystem.presentation.agenda.Controller(agendaView, agendaModel, service);
-            pestañas.addTab("Agenda semanal", iconoAgenda, agendaView);
+            pestañas.addTab("Actividades", iconoAgenda, agendaView);
 
         } else if (usuarioActual.getRole().equals(Rol.FUNCIONARIO)) {
             //-Reservas pestaña
@@ -87,7 +87,7 @@ public class MainView extends JFrame {
             reservationSystem.presentation.agenda.AgendaView agendaView = new reservationSystem.presentation.agenda.AgendaView();
             reservationSystem.presentation.agenda.Model agendaModel = new reservationSystem.presentation.agenda.Model();
             new reservationSystem.presentation.agenda.Controller(agendaView, agendaModel, service);
-            pestañas.addTab("Agenda semanal", iconoAgenda, agendaView);
+            pestañas.addTab("Actividades", iconoAgenda, agendaView);
         }
 
         JButton cerrarSesionButton = new JButton("Cerrar sesión");
