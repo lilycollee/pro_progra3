@@ -182,6 +182,8 @@ mvn test
 mvn verify
 ```
 
+> ⚠️ **Importante:** después de correr `mvn test` o `mvn verify`, el compilador de Maven sobrescribe las clases en `target/classes` sin instrumentar los `.form` del diseñador visual de IntelliJ. Si intentas correr la aplicación (`reservationSystem.Application`) justo después de un `test`/`verify`, vas a obtener un `NullPointerException` al abrir cualquier ventana. Antes de volver a ejecutar la app, hazle **Build → Rebuild Project** en IntelliJ para que recompile con la instrumentación correcta.
+
 ---
 
 ## Equipo
