@@ -98,8 +98,8 @@ public class MainView extends JFrame {
         this.add(panelSuperior, java.awt.BorderLayout.NORTH);
         this.add(pestañas, java.awt.BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(1200, 700));
-        this.setSize(1200, 700);
+        this.setMinimumSize(new Dimension(1200, 800));
+        this.setSize(1200, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
