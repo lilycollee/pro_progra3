@@ -146,6 +146,17 @@ public class Service {
         }
         return sb.toString();
     }
+
+    public String generarIdRecurso() {
+        int max = data.getRecursos().stream()
+                .map(Recurso::getId)
+                .filter(id -> id != null && id.matches("REC\\d+"))
+                .mapToInt(id -> Integer.parseInt(id.substring(3)))
+                .max()
+                .orElse(0);
+        return String.format("REC%03d", max + 1);
+    }
+
     // ---------- Categorías ----------
 
     public List<CategoriaRecurso> obtenerCategorias() {
@@ -186,6 +197,15 @@ public class Service {
         return data.getCategorias().stream().filter(c -> c.getId().equals(id)).findFirst();
     }
 
+    public String generarIdCategoria() {
+        int max = data.getCategorias().stream()
+                .map(CategoriaRecurso::getId)
+                .filter(id -> id != null && id.matches("CAT\\d+"))
+                .mapToInt(id -> Integer.parseInt(id.substring(3)))
+                .max()
+                .orElse(0);
+        return String.format("CAT%03d", max + 1);
+    }
 
     //---------- Reservas ----------
 
