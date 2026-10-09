@@ -63,11 +63,16 @@ public class Controller {
     private void buscar() {
         String id = view.getIdBusqueda();
         String descripcion = view.getDescripcionBusqueda();
+        String categoria = view.getCategoriaBusqueda();
 
         var resultado = service.obtenerRecursos().stream()
                 .filter(r -> (id.isBlank() || (r.getId() != null && r.getId().contains(id)))
                         && (descripcion.isBlank() || (r.getDescripcion() != null
-                        && r.getDescripcion().toLowerCase().contains(descripcion.toLowerCase()))))
+                        && r.getDescripcion().toLowerCase().contains(descripcion.toLowerCase())))
+                        && (categoria.isBlank() || (r.getCategoriaRecurso() != null
+                        && r.getCategoriaRecurso().getDescripcion() != null
+                        && r.getCategoriaRecurso().getDescripcion().toLowerCase()
+                        .contains(categoria.toLowerCase()))))
                 .toList();
 
         model.setRecursos(resultado);
@@ -78,14 +83,18 @@ public class Controller {
         String descripcion = view.getDescripcion();
         CategoriaRecurso categoria = view.getCategoriaSeleccionada();
 
-        if (id.isBlank() || descripcion.isBlank()) {
-            view.mostrarError("El ID y la descripción son obligatorios.");
+        if (descripcion.isBlank()) {
+            view.mostrarError("La descripción es obligatoria.");
             return;
         }
 
         if (categoria == null) {
             view.mostrarError("Seleccione una categoría existente.");
             return;
+        }
+
+        if (id.isBlank()) {
+            id = service.generarIdRecurso();
         }
 
         Recurso recurso = new Recurso(id, descripcion, categoria);

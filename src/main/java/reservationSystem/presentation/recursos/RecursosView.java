@@ -25,6 +25,7 @@ public class RecursosView extends JPanel implements PropertyChangeListener {
     private JButton eliminarButton;
     private JButton imprimirButton;
     private JTable tablaRecursos;
+    private JTextField categoriaBusqueda;
 
     private Controller controller;
     private Model model;
@@ -134,6 +135,10 @@ public class RecursosView extends JPanel implements PropertyChangeListener {
 
     public String getDescripcion() {
         return descripcionField.getText().trim();
+    }
+
+    public String getCategoriaBusqueda() {
+        return categoriaBusqueda.getText().trim();
     }
 
     public CategoriaRecurso getCategoriaSeleccionada() {

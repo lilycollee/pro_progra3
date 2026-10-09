@@ -77,9 +77,13 @@ public class Controller {
         String id = view.getIdCategoria();
         String descripcion = view.getDescripcionCategoria();
 
-        if (id.isBlank() || descripcion.isBlank()) {
-            view.mostrarError("El ID y la descripción son obligatorios.");
+        if (descripcion.isBlank()) {
+            view.mostrarError("La descripción es obligatoria.");
             return;
+        }
+
+        if (id.isBlank()) {
+            id = service.generarIdCategoria();
         }
 
         CategoriaRecurso categoria = new CategoriaRecurso(id, descripcion);
