@@ -1,9 +1,5 @@
 package reservationSystem.logic.entities;
 
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAccessType;
-
-@XmlAccessorType(XmlAccessType.FIELD)
 public class CategoriaRecurso {
     private String id;
     private String descripcion;
