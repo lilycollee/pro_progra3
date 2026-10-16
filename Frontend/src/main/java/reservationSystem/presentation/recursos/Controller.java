@@ -14,7 +14,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.CategoriaRecurso;
 import reservationSystem.logic.entities.Recurso;
 
@@ -23,9 +23,9 @@ import javax.swing.*;
 public class Controller {
     private final RecursosView view;
     private final Model model;
-    private final Service service;
+    private final IService service;
 
-    public Controller(RecursosView view, Model model, Service service) {
+    public Controller(RecursosView view, Model model, IService service) {
         this.view = view;
         this.model = model;
         this.service = service;

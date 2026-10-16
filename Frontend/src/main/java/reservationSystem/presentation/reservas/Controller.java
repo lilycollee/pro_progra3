@@ -4,7 +4,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.*;
 
 import java.time.LocalDate;
@@ -27,10 +27,10 @@ import reservationSystem.logic.entities.ia.ReservaExtraccion;
 public class Controller {
     private ReservasView view;
     private Model model;
-    private Service service;
+    private IService service;
     private Funcionario funcionarioActual;
 
-    public Controller(ReservasView view, Model model, Service service, Funcionario funcionarioActual) {
+    public Controller(ReservasView view, Model model, IService service, Funcionario funcionarioActual) {
         this.view = view;
         this.model = model;
         this.funcionarioActual = funcionarioActual;

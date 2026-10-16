@@ -1,5 +1,6 @@
 package reservationSystem;
 
+import reservationSystem.logic.IService;
 import reservationSystem.logic.Service;
 import reservationSystem.presentation.login.Controller;
 import reservationSystem.presentation.login.LoginView;
@@ -17,7 +18,7 @@ public class Application {
         } catch (Exception ex) {
         }
         javax.swing.SwingUtilities.invokeLater(() -> {
-            Service service = new Service();
+            IService service = Service.instance();
             LoginView loginView = new LoginView();
             Model model = new Model();
             Controller controller = new Controller(loginView, model, service);

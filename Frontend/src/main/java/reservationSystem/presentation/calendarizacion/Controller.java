@@ -12,7 +12,7 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import javax.swing.JOptionPane;
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.CategoriaRecurso;
 import reservationSystem.logic.entities.Recurso;
 import reservationSystem.logic.entities.Reserva;
@@ -22,9 +22,9 @@ import java.util.List;
 public class Controller {
     private final CalendarizacionView view;
     private final Model model;
-    private final Service service;
+    private final IService service;
 
-    public Controller(CalendarizacionView view, Model model, Service service) {
+    public Controller(CalendarizacionView view, Model model, IService service) {
         this.view = view;
         this.model = model;
         this.service = service;

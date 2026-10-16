@@ -1,6 +1,6 @@
 package reservationSystem.presentation.agenda;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.Reserva;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,14 +14,14 @@ public class AgendaTableModel extends AbstractTableModel {
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM");
     private LocalDate inicioSemana;
     private List<Reserva> reservas;
-    private Service service;
+    private IService service;
 
     public AgendaTableModel() {
         inicioSemana = LocalDate.now();
         reservas = new ArrayList<>();
     }
 
-    public void setService(Service service) {
+    public void setService(IService service) {
         this.service = service;
     }
 

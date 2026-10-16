@@ -13,7 +13,7 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.Funcionario;
 
 import javax.swing.*;
@@ -21,9 +21,9 @@ import javax.swing.*;
 public class Controller {
     private FuncionarioView view;
     private Model model;
-    private Service service;
+    private IService service;
 
-    public Controller(FuncionarioView view, Model model, Service service) {
+    public Controller(FuncionarioView view, Model model, IService service) {
         this.view = view;
         this.model = model;
         this.service = service;

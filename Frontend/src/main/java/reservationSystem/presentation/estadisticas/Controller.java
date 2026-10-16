@@ -1,6 +1,6 @@
 package reservationSystem.presentation.estadisticas;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.EstadisticaItem;
 
 import org.jfree.chart.ChartFactory;
@@ -17,8 +17,8 @@ import java.util.List;
 public class Controller {
     private EstadisticasView view;
     private Model model;
-    private Service service;
-    public Controller(EstadisticasView view, Model model, Service service){
+    private IService service;
+    public Controller(EstadisticasView view, Model model, IService service){
         this.view = view;
         this.model = model;
         this.service = service;

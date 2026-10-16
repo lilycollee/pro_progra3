@@ -1,17 +1,17 @@
 package reservationSystem.presentation.reservas;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.Reserva;
 import reservationSystem.presentation.TableModel;
 
 import java.util.List;
 
 public class ReservasTableModel extends TableModel<Reserva> {
-    private Service service;
+    private IService service;
     public ReservasTableModel(List<Reserva> datos) {
         super(new int[]{0, 1, 2, 3, 4, 5}, datos);
     }
-    public void setService(Service service) {
+    public void setService(IService service) {
         this.service = service;
     }
     @Override

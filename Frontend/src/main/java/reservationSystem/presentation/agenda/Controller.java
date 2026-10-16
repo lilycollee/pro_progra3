@@ -15,7 +15,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -25,9 +25,9 @@ import java.time.format.DateTimeFormatter;
 public class Controller {
     private final AgendaView view;
     private final Model model;
-    private final Service service;
+    private final IService service;
 
-    public Controller(AgendaView view, Model model, Service service) {
+    public Controller(AgendaView view, Model model, IService service) {
         this.view = view;
         this.model = model;
         this.service = service;

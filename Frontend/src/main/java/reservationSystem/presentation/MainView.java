@@ -1,6 +1,6 @@
 package reservationSystem.presentation;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.Usuario;
 import reservationSystem.logic.entities.Funcionario;
 import reservationSystem.logic.entities.enums.Rol;
@@ -14,9 +14,9 @@ import javax.swing.*;
 
 public class MainView extends JFrame {
     private JTabbedPane pestañas;
-    private Service service;
+    private IService service;
 
-    public MainView(Usuario usuarioActual, Service service) {
+    public MainView(Usuario usuarioActual, IService service) {
         super("Sistema de Reserva de Recursos");
         this.service = service;
         pestañas = new JTabbedPane();
@@ -107,7 +107,7 @@ public class MainView extends JFrame {
         this.dispose();
         reservationSystem.presentation.login.LoginView loginView = new reservationSystem.presentation.login.LoginView();
         reservationSystem.presentation.login.Model loginModel = new reservationSystem.presentation.login.Model();
-        new reservationSystem.presentation.login.Controller(loginView, loginModel, new Service());
+        new reservationSystem.presentation.login.Controller(loginView, loginModel, reservationSystem.logic.Service.instance());
         loginView.setVisible(true);
     }
 }

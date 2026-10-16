@@ -1,15 +1,15 @@
 package reservationSystem.presentation.login;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.Usuario;
 import reservationSystem.presentation.MainView;
 
 public class Controller {
     private LoginView view;
     private Model model;
-    private Service service;
+    private IService service;
 
-    public Controller(LoginView view, Model model, Service service) {
+    public Controller(LoginView view, Model model, IService service) {
         this.view = view;
         this.model = model;
         this.service = service;

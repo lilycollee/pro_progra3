@@ -1,6 +1,6 @@
 package reservationSystem.presentation.calendarizacion;
 
-import reservationSystem.logic.Service;
+import reservationSystem.logic.IService;
 import reservationSystem.logic.entities.DetalleReserva;
 import reservationSystem.logic.entities.Recurso;
 import reservationSystem.logic.entities.Reserva;
@@ -11,13 +11,13 @@ import java.util.List;
 public class CalendarizacionTableModel extends AbstractTableModel {
     private List<Recurso> recursos;
     private List<Reserva> reservas;
-    private Service service;
+    private IService service;
 
     public CalendarizacionTableModel(List<Recurso> recursos, List<Reserva> reservas) {
         this.recursos = recursos;
         this.reservas = reservas;
     }
-    public void setService(Service service) {
+    public void setService(IService service) {
         this.service = service;
     }
     public void setDatos(List<Recurso> recursos, List<Reserva> reservas) {
