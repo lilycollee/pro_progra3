@@ -56,8 +56,8 @@ public class AdministradorDao {
     }
 
     private Administrador from(ResultSet rs) throws SQLException {
-        Administrador a = new Administrador(rs.getString("id"));   // el constructor pone clave = id
-        a.cambiarClave(rs.getString("clave"));                      // restaura la clave real guardada
+        Administrador a = new Administrador(rs.getString("id"));
+        a.cambiarClave(rs.getString("clave"));
         return a;
     }
 }

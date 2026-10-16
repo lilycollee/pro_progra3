@@ -45,6 +45,9 @@ public class Reserva {
     public void cancelarReserva(){
         this.estado = EstadoReserva.CANCELADA;
     }
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
     public String getId() {
         return id;
     }
