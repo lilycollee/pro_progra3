@@ -1,6 +1,8 @@
 package reservationSystem.logic.entities;
 
-public class EstadisticaItem {
+import java.io.Serializable;
+
+public class EstadisticaItem implements Serializable {
     private String etiqueta;
     private long cantidad;
     public EstadisticaItem() {}

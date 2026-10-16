@@ -1,8 +1,9 @@
-package reservationSystem.logic.entities.ia;
+package reservationSystem.logic;
 
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
+import reservationSystem.logic.entities.ia.ReservaExtraccion;
 
 public interface ReservaExtractorService {
     @SystemMessage("""

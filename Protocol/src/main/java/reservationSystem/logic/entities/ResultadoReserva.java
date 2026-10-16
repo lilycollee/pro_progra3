@@ -1,9 +1,10 @@
 package reservationSystem.logic.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultadoReserva {
+public class ResultadoReserva implements Serializable {
     private boolean exitosa;
     private List<CategoriaRecurso>  categoriasNoDisponibles = new ArrayList<>();
 

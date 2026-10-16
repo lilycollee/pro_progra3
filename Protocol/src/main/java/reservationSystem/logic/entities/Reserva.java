@@ -2,12 +2,13 @@ package reservationSystem.logic.entities;
 
 import reservationSystem.logic.entities.enums.EstadoReserva;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reserva {
+public class Reserva implements Serializable {
     private String id;
     private String actividad;
     private String idFuncionario;

@@ -1,6 +1,8 @@
 package reservationSystem.logic.entities;
 
-public class DetalleReserva {
+import java.io.Serializable;
+
+public class DetalleReserva implements Serializable {
     private String idCategoriaSolicitada;
     private String idRecursoAsignado;
 

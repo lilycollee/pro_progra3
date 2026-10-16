@@ -1,8 +1,9 @@
 package reservationSystem.logic.entities.ia;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ReservaExtraccion {
+public class ReservaExtraccion implements Serializable {
     private String actividad;
     private String fecha;
     private String horaInicio;
