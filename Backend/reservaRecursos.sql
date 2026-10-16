@@ -29,7 +29,7 @@ CREATE TABLE CategoriaRecurso (
 );
 
 -- Borrar una categoria borra en cascada sus recursos
--- (igual que Service.eliminarCategoria con XML)
+-- (igual que reservationSystem.logic.Service.eliminarCategoria con XML)
 CREATE TABLE Recurso (
     id          VARCHAR(10) NOT NULL,
     descripcion VARCHAR(80) NOT NULL,
