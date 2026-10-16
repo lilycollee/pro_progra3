@@ -1,144 +1,150 @@
 package reservationSystem.logic;
 
-import reservationSystem.data.Data;
-import reservationSystem.data.XmlPersister;
-import reservationSystem.logic.entities.*;
-import reservationSystem.logic.entities.enums.EstadoReserva;
-
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
+import reservationSystem.data.AdministradorDao;
+import reservationSystem.data.CategoriaDao;
+import reservationSystem.data.FuncionarioDao;
+import reservationSystem.data.RecursoDao;
+import reservationSystem.data.ReservaDao;
+import reservationSystem.logic.entities.*;
+import reservationSystem.logic.entities.enums.EstadoReserva;
 import reservationSystem.logic.entities.ia.ReservaExtraccion;
 import reservationSystem.logic.entities.ia.ReservaExtractorService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Map;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Service {
-    private Data data;
-
-    public Service(Data data) {
-        this.data = data;
-    }
+    private final CategoriaDao categoriaDao = new CategoriaDao();
+    private final RecursoDao recursoDao = new RecursoDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final AdministradorDao administradorDao = new AdministradorDao();
+    private final ReservaDao reservaDao = new ReservaDao();
 
     public Service() {
-        data = XmlPersister.instance().load();
+    }
 
-    }
-    protected void guardarCambios(){
-        XmlPersister.instance().store(data);
-    }
+    // ---------- Autenticación ----------
+
     public Usuario autenticar(String id, String clave) {
-        for (Administrador administrador : data.getAdministradores()) {
-            if (administrador.getId().equals(id)) {
-                if (administrador.getClave().equals(clave)) {
-                    return administrador;
-                }
-            }
+        Optional<Administrador> admin = administradorDao.read(id);
+        if (admin.isPresent() && admin.get().getClave().equals(clave)) {
+            return admin.get();
         }
-        for (Funcionario funcionario : data.getFuncionarios()) {
-            if (funcionario.getId().equals(id)) {
-                if (funcionario.getClave().equals(clave)) {
-                    return funcionario;
-                }
-            }
+        Optional<Funcionario> funcionario = funcionarioDao.read(id);
+        if (funcionario.isPresent() && funcionario.get().getClave().equals(clave)) {
+            return funcionario.get();
         }
         return null;
     }
 
-    //-------- Funcionarios --------
-    public Funcionario guardarFuncionario(Funcionario funcionario) {
-        eliminarFuncionario(funcionario.getId());
-        data.getFuncionarios().add(funcionario);
-        guardarCambios();
-        return funcionario;
-    }
-    public void eliminarFuncionario(String id) {
-        data.getFuncionarios().removeIf(funcionario -> funcionario.getId().equals(id));
-        guardarCambios();
-    }
-    public Optional<Funcionario> obtenerFuncionario(String id) {
-        return data.getFuncionarios().stream().filter(f -> f.getId().equals(id)).findFirst();
-    }
-    public List<Funcionario> obtenerFuncionarios() {
-        return data.getFuncionarios();
-    }
-    public List<Reserva> obtenerReservasPorFuncionario(String idFuncionario) {
-        return data.getReservas().stream().filter(r -> r.getIdFuncionario().equals(idFuncionario)).toList();
+    public boolean cambiarClave(String id, String claveActual, String claveNueva) {
+        Optional<Administrador> admin = administradorDao.read(id);
+        if (admin.isPresent()) {
+            if (!admin.get().validarClave(claveActual)) return false;
+            admin.get().cambiarClave(claveNueva);
+            administradorDao.save(admin.get());
+            return true;
+        }
+        Optional<Funcionario> funcionario = funcionarioDao.read(id);
+        if (funcionario.isPresent()) {
+            if (!funcionario.get().validarClave(claveActual)) return false;
+            funcionario.get().cambiarClave(claveNueva);
+            funcionarioDao.save(funcionario.get());
+            return true;
+        }
+        return false;
     }
 
-    //-------- Administradores --------
+    // ---------- Funcionarios ----------
+
+    public Funcionario guardarFuncionario(Funcionario funcionario) {
+        funcionarioDao.save(funcionario);
+        return funcionario;
+    }
+
+    public boolean funcionarioTieneReservas(String id) {
+        return reservaDao.funcionarioTieneReservas(id);
+    }
+
+    /** @return false si el funcionario tiene reservas (la FK no permite borrarlo) o no existe. */
+    public boolean eliminarFuncionario(String id) {
+        if (reservaDao.funcionarioTieneReservas(id)) {
+            return false;
+        }
+        return funcionarioDao.delete(id);
+    }
+
+    public Optional<Funcionario> obtenerFuncionario(String id) {
+        return funcionarioDao.read(id);
+    }
+
+    public List<Funcionario> obtenerFuncionarios() {
+        return funcionarioDao.findAll();
+    }
+
+    public List<Reserva> obtenerReservasPorFuncionario(String idFuncionario) {
+        return reservaDao.findByFuncionario(idFuncionario);
+    }
+
+    // ---------- Administradores ----------
+
     public Administrador guardarAdministrador(Administrador administrador) {
-        eliminarAdministrador(administrador.getId());
-        data.getAdministradores().add(administrador);
-        guardarCambios();
+        administradorDao.save(administrador);
         return administrador;
     }
+
     public void eliminarAdministrador(String id) {
-        data.getAdministradores().removeIf(a -> a.getId().equals(id));
-        guardarCambios();
+        administradorDao.delete(id);
     }
+
     public Optional<Administrador> obtenerAdministrador(String id) {
-        return data.getAdministradores().stream().filter(a -> a.getId().equals(id)).findFirst();
+        return administradorDao.read(id);
     }
+
     public List<Administrador> obtenerAdministradores() {
-        return data.getAdministradores();
+        return administradorDao.findAll();
     }
 
     // ---------- Recursos ----------
 
     public Recurso guardarRecurso(Recurso recurso) {
-        eliminarRecursoInterno(recurso.getId());
-        data.getRecursos().add(recurso);
-        guardarCambios();
+        recursoDao.save(recurso);
         return recurso;
     }
 
-    private void eliminarRecursoInterno(String id) {
-        data.getRecursos().removeIf(recurso -> recurso.getId().equals(id));
-    }
-
     public boolean recursoEnReservaActiva(String idRecurso) {
-        return data.getReservas().stream()
-                .filter(r -> EstadoReserva.ACTIVA.equals(r.getEstado()))
-                .flatMap(r -> r.getDetalles().stream())
-                .anyMatch(d -> idRecurso.equals(d.getIdRecursoAsignado()));
+        return reservaDao.recursoEnReservaActiva(idRecurso);
     }
 
     public boolean eliminarRecurso(String id) {
-        if (recursoEnReservaActiva(id)) {
+        if (reservaDao.recursoEnReservaActiva(id)) {
             return false;
         }
-        boolean eliminado = data.getRecursos().removeIf(recurso -> recurso.getId().equals(id));
-        if (eliminado) {
-            guardarCambios();
-        }
-        return eliminado;
+        return recursoDao.delete(id);
     }
+
     public Optional<Recurso> obtenerRecurso(String id) {
-        return data.getRecursos().stream().filter(r -> r.getId().equals(id)).findFirst();
+        return recursoDao.read(id);
     }
+
     public List<Recurso> obtenerRecursos() {
-        List<Recurso> recursos = data.getRecursos();
-        for (Recurso recurso : recursos) {
-            if (recurso.getIdCategoria() != null && recurso.getCategoriaRecurso() == null) {
-                obtenerCategoria(recurso.getIdCategoria())
-                        .ifPresent(recurso::setCategoriaRecurso);
-            }
-        }
-        return recursos;
+        return recursoDao.findAll();
     }
+
     public List<Recurso> obtenerRecursosPorCategoria(String idCategoria) {
-        return obtenerRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
+        return recursoDao.findByCategoria(idCategoria);
     }
+
     public String obtenerRecursosAsignadosTexto(Reserva reserva) {
         StringBuilder sb = new StringBuilder();
         for (DetalleReserva detalle : reserva.getDetalles()) {
             if (detalle.getIdRecursoAsignado() != null) {
-                obtenerRecurso(detalle.getIdRecursoAsignado()).ifPresent(r -> {
+                recursoDao.read(detalle.getIdRecursoAsignado()).ifPresent(r -> {
                     if (sb.length() > 0) sb.append(", ");
                     sb.append(r.getDescripcion());
                 });
@@ -148,88 +154,65 @@ public class Service {
     }
 
     public String generarIdRecurso() {
-        int max = data.getRecursos().stream()
-                .map(Recurso::getId)
-                .filter(id -> id != null && id.matches("REC\\d+"))
-                .mapToInt(id -> Integer.parseInt(id.substring(3)))
-                .max()
-                .orElse(0);
-        return String.format("REC%03d", max + 1);
+        return String.format("REC%03d", recursoDao.maxNumeroId() + 1);
     }
 
     // ---------- Categorías ----------
 
     public List<CategoriaRecurso> obtenerCategorias() {
-        return data.getCategorias();
+        return categoriaDao.findAll();
     }
+
     public CategoriaRecurso guardarCategoria(CategoriaRecurso categoria) {
-        eliminarCategoriaInterno(categoria.getId());
-        data.getCategorias().add(categoria);
-        guardarCambios();
+        categoriaDao.save(categoria);
         return categoria;
     }
 
-    private void eliminarCategoriaInterno(String id) {
-        data.getCategorias().removeIf(categoria -> categoria.getId().equals(id));
-    }
-
     public boolean categoriaTieneRecursoEnReservaActiva(String idCategoria) {
-        return data.getRecursos().stream()
-                .filter(r -> idCategoria.equals(r.getIdCategoria()))
-                .anyMatch(r -> recursoEnReservaActiva(r.getId()));
+        return reservaDao.categoriaConReservaActiva(idCategoria);
     }
 
+    /** Los recursos de la categoría se borran por cascada en la base de datos. */
     public boolean eliminarCategoria(String id) {
-        if (categoriaTieneRecursoEnReservaActiva(id)) {
+        if (reservaDao.categoriaConReservaActiva(id)) {
             return false;
         }
-
-        data.getRecursos().removeIf(recurso -> id.equals(recurso.getIdCategoria()));
-        boolean eliminada = data.getCategorias().removeIf(categoria -> categoria.getId().equals(id));
-
-        if (eliminada) {
-            guardarCambios();
-        }
-        return eliminada;
+        return categoriaDao.delete(id);
     }
 
     public Optional<CategoriaRecurso> obtenerCategoria(String id) {
-        return data.getCategorias().stream().filter(c -> c.getId().equals(id)).findFirst();
+        return categoriaDao.read(id);
     }
 
     public String generarIdCategoria() {
-        int max = data.getCategorias().stream()
-                .map(CategoriaRecurso::getId)
-                .filter(id -> id != null && id.matches("CAT\\d+"))
-                .mapToInt(id -> Integer.parseInt(id.substring(3)))
-                .max()
-                .orElse(0);
-        return String.format("CAT%03d", max + 1);
+        return String.format("CAT%03d", categoriaDao.maxNumeroId() + 1);
     }
 
-    //---------- Reservas ----------
+    // ---------- Reservas ----------
 
     public List<Reserva> obtenerReservas() {
-        return data.getReservas();
+        return reservaDao.findAll();
     }
 
     public List<Reserva> obtenerReservasSemana(LocalDate fechaDeLaSemana) {
         LocalDate lunes = fechaDeLaSemana.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate domingo = lunes.plusDays(6);
 
-        return data.getReservas().stream()
-                .filter(r -> r.getEstado() != null && r.getEstado().equals(EstadoReserva.ACTIVA))
+        return reservaDao.findAll().stream()
+                .filter(r -> EstadoReserva.ACTIVA.equals(r.getEstado()))
                 .filter(r -> r.getFecha() != null)
                 .filter(r -> !r.getFecha().isBefore(lunes) && !r.getFecha().isAfter(domingo))
                 .toList();
     }
 
-    public ResultadoReserva crearReserva(Reserva reservaSolicitada) {
+    // synchronized: la revisión de disponibilidad y el insert deben ser una sola operación
+    public synchronized ResultadoReserva crearReserva(Reserva reservaSolicitada) {
+        List<Reserva> existentes = reservaDao.findAll();
         List<CategoriaRecurso> noDisponibles = new ArrayList<>();
         List<DetalleReserva> detallesAsignados = new ArrayList<>();
 
         for (DetalleReserva detalle : reservaSolicitada.getDetalles()) {
-            Recurso disponible = buscarRecursoDisponible(detalle.getIdCategoriaSolicitada(), reservaSolicitada);
+            Recurso disponible = buscarRecursoDisponible(detalle.getIdCategoriaSolicitada(), reservaSolicitada, existentes);
             if (disponible == null) {
                 obtenerCategoria(detalle.getIdCategoriaSolicitada()).ifPresent(noDisponibles::add);
             } else {
@@ -240,7 +223,7 @@ public class Service {
         if (!noDisponibles.isEmpty()) {
             return ResultadoReserva.fracaso(noDisponibles);
         }
-        String id = "R" + (data.getReservas().size() + 1);
+        String id = "R" + (reservaDao.maxNumeroId() + 1);
         Reserva reserva = new Reserva(
                 id,
                 reservaSolicitada.getIdFuncionario(),
@@ -252,31 +235,32 @@ public class Service {
         for (DetalleReserva detalle : detallesAsignados) {
             reserva.agregarDetalleReserva(detalle);
         }
-        data.getReservas().add(reserva);
-        guardarCambios();
+        reservaDao.create(reserva);
         return ResultadoReserva.exito();
     }
+
     public void cancelarReserva(String id) {
-        data.getReservas().stream().filter(r -> r.getId().equals(id)).findFirst().ifPresent(Reserva::cancelarReserva);
-        guardarCambios();
+        reservaDao.updateEstado(id, EstadoReserva.CANCELADA);
     }
-    private Recurso buscarRecursoDisponible(String idCategoria, Reserva nuevaReserva) {
-        List<Recurso> recursosDeCategoria = obtenerRecursos().stream().filter(r -> r.getCategoriaRecurso().getId().equals(idCategoria)).toList();
-        for (Recurso recurso : recursosDeCategoria) {
-            if (!estaOcupado(recurso, nuevaReserva)) {
+
+    private Recurso buscarRecursoDisponible(String idCategoria, Reserva nuevaReserva, List<Reserva> existentes) {
+        for (Recurso recurso : recursoDao.findByCategoria(idCategoria)) {
+            if (!estaOcupado(recurso, nuevaReserva, existentes)) {
                 return recurso;
             }
         }
         return null;
     }
-    private boolean estaOcupado(Recurso recurso, Reserva nuevaReserva) {
-        for (Reserva existente : data.getReservas()) {
-            if (existente.getEstado() == null || !existente.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+
+    private boolean estaOcupado(Recurso recurso, Reserva nuevaReserva, List<Reserva> existentes) {
+        for (Reserva existente : existentes) {
+            if (!EstadoReserva.ACTIVA.equals(existente.getEstado())) continue;
             if (!existente.getFecha().equals(nuevaReserva.getFecha())) continue;
-            boolean seSolapan = nuevaReserva.getHoraInicio().isBefore(existente.getHoraFin()) && existente.getHoraInicio().isBefore(nuevaReserva.getHoraFin());
+            boolean seSolapan = nuevaReserva.getHoraInicio().isBefore(existente.getHoraFin())
+                    && existente.getHoraInicio().isBefore(nuevaReserva.getHoraFin());
             if (!seSolapan) continue;
             for (DetalleReserva detalle : existente.getDetalles()) {
-                if (detalle.getIdRecursoAsignado() != null && detalle.getIdRecursoAsignado().equals(recurso.getId())) {
+                if (recurso.getId().equals(detalle.getIdRecursoAsignado())) {
                     return true;
                 }
             }
@@ -285,55 +269,39 @@ public class Service {
     }
 
     public List<Reserva> obtenerReservasPorFechaYCategoria(LocalDate fecha, String idCategoria) {
-        obtenerRecursos(); // fuerza a reconectar categoriaRecurso en todos los recursos antes de usarla abajo
-        return data.getReservas().stream()
-                .filter(r -> r.getEstado().equals(EstadoReserva.ACTIVA))
+        Set<String> idsRecursos = recursoDao.findByCategoria(idCategoria).stream()
+                .map(Recurso::getId)
+                .collect(Collectors.toSet());
+        return reservaDao.findAll().stream()
+                .filter(r -> EstadoReserva.ACTIVA.equals(r.getEstado()))
                 .filter(r -> r.getFecha().equals(fecha))
                 .filter(r -> r.getDetalles().stream().anyMatch(d ->
-                        d.getIdRecursoAsignado() != null && obtenerRecurso(d.getIdRecursoAsignado())
-                                .map(rec -> rec.getCategoriaRecurso().getId().equals(idCategoria))
-                                .orElse(false))).toList();
+                        d.getIdRecursoAsignado() != null && idsRecursos.contains(d.getIdRecursoAsignado())))
+                .toList();
     }
 
-    // ---------- Cambiar clave ----------
+    // ---------- Estadísticas ----------
 
-    public boolean cambiarClave(String id, String claveActual, String claveNueva) {
-        Usuario usuario = null;
-        for (Administrador administrador : data.getAdministradores()) {
-            if (administrador.getId().equals(id)) {
-                usuario = administrador;
-                break;
-            }
-        }
-        if (usuario == null) {
-            for (Funcionario funcionario : data.getFuncionarios()) {
-                if (funcionario.getId().equals(id)) {
-                    usuario = funcionario;
-                    break;
-                }
-            }
-        }
-        if (usuario == null || !usuario.validarClave(claveActual)) {
-            return false;
-        }
-        usuario.cambiarClave(claveNueva);
-        guardarCambios();
-        return true;
-    }
-
-    //---------- Estadísticas ----------
     public List<EstadisticaItem> obtenerEstadisticasRecurso(LocalDate desde, LocalDate hasta) {
-        obtenerRecursos();
+        Map<String, String> categoriaPorRecurso = new HashMap<>();
+        for (Recurso r : recursoDao.findAll()) {
+            if (r.getCategoriaRecurso() != null) {
+                categoriaPorRecurso.put(r.getId(), r.getCategoriaRecurso().getDescripcion());
+            }
+        }
+        Map<String, String> descripcionCategoria = categoriaDao.findAll().stream()
+                .collect(Collectors.toMap(CategoriaRecurso::getId, CategoriaRecurso::getDescripcion));
+
         Map<String, Long> conteo = new TreeMap<>();
-        for (Reserva reserva : data.getReservas()) {
-            if (!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+        for (Reserva reserva : reservaDao.findAll()) {
+            if (!EstadoReserva.ACTIVA.equals(reserva.getEstado())) continue;
             if (reserva.getFecha().isBefore(desde) || reserva.getFecha().isAfter(hasta)) continue;
             for (DetalleReserva detalle : reserva.getDetalles()) {
                 String categoria;
                 if (detalle.getIdRecursoAsignado() != null) {
-                    categoria = obtenerRecurso(detalle.getIdRecursoAsignado()).map(Recurso::getCategoriaRecurso).map(CategoriaRecurso::getDescripcion).orElse("N/A");
+                    categoria = categoriaPorRecurso.getOrDefault(detalle.getIdRecursoAsignado(), "N/A");
                 } else {
-                    categoria = obtenerCategoria(detalle.getIdCategoriaSolicitada()).map(CategoriaRecurso::getDescripcion).orElse("N/A");
+                    categoria = descripcionCategoria.getOrDefault(detalle.getIdCategoriaSolicitada(), "N/A");
                 }
                 conteo.merge(categoria, 1L, Long::sum);
             }
@@ -344,10 +312,11 @@ public class Service {
         }
         return resultado;
     }
+
     public List<EstadisticaItem> obtenerEstadisticasActividades(LocalDate desde, LocalDate hasta) {
         Map<LocalDate, Long> conteo = new TreeMap<>();
-        for (Reserva reserva : data.getReservas()) {
-            if(!reserva.getEstado().equals(EstadoReserva.ACTIVA)) continue;
+        for (Reserva reserva : reservaDao.findAll()) {
+            if (!EstadoReserva.ACTIVA.equals(reserva.getEstado())) continue;
             if (reserva.getFecha().isBefore(desde) || reserva.getFecha().isAfter(hasta)) continue;
             LocalDate inicioSemana = reserva.getFecha().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             conteo.merge(inicioSemana, 1L, Long::sum);
@@ -359,7 +328,8 @@ public class Service {
         return resultado;
     }
 
-    //---------- IA ----------
+    // ---------- IA ----------
+
     public ReservaExtraccion extraerReserva(String frase) {
         OpenAiChatModel aiModel = OpenAiChatModel.builder()
                 .baseUrl("http://langchain4j.dev/demo/openai/v1")
@@ -369,13 +339,10 @@ public class Service {
 
         ReservaExtractorService aiService = AiServices.create(ReservaExtractorService.class, aiModel);
 
-        String listaCategorias = formatearCategorias(data.getCategorias().stream()
-                .map(CategoriaRecurso::getDescripcion).collect(Collectors.toList()));
+        String listaCategorias = categoriaDao.findAll().stream()
+                .map(CategoriaRecurso::getDescripcion)
+                .collect(Collectors.joining(", "));
 
         return aiService.extraer(frase, listaCategorias, LocalDate.now().toString());
     }
-    private String formatearCategorias(List<String> descripciones) {
-        return String.join(", ", descripciones);
-    }
-
 }

@@ -70,6 +70,10 @@ public class Controller {
             view.mostrarError("Seleccione o escriba el ID.");
             return;
         }
+        if (service.funcionarioTieneReservas(id)) {
+            view.mostrarError("No se puede eliminar: el funcionario tiene reservas asociadas.");
+            return;
+        }
         service.eliminarFuncionario(id);
         limpiar();
         actualizarListado();
