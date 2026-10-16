@@ -1,9 +1,5 @@
 package reservationSystem.logic.entities;
 
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAccessType;
-
-@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Usuario {
     private String id;
     private String clave;

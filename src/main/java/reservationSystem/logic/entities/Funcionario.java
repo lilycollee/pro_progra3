@@ -2,10 +2,6 @@ package reservationSystem.logic.entities;
 
 import reservationSystem.logic.entities.enums.Rol;
 
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAccessType;
-
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Funcionario extends Usuario {
     private String nombre;
     private String telefono;
