@@ -17,7 +17,6 @@ public class RecursoDao {
             "select r.id, r.descripcion, c.id as idCat, c.descripcion as descCat "
                     + "from Recurso r inner join CategoriaRecurso c on r.idCategoria = c.id ";
 
-    // Inserta o actualiza
     public void save(Recurso r) {
         String sql = "insert into Recurso (id, descripcion, idCategoria) values (?, ?, ?) "
                 + "on duplicate key update descripcion = values(descripcion), "
@@ -76,7 +75,6 @@ public class RecursoDao {
         }
     }
 
-    // Número más alto usado en los ids REC###
     public int maxNumeroId() {
         String sql = "select max(cast(substring(id, 4) as unsigned)) from Recurso where id regexp '^REC[0-9]+$'";
         try (PreparedStatement stm = db.prepareStatement(sql); ResultSet rs = stm.executeQuery()) {
