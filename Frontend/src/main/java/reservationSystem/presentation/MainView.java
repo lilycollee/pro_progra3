@@ -107,7 +107,7 @@ public class MainView extends JFrame {
         this.dispose();
         reservationSystem.presentation.login.LoginView loginView = new reservationSystem.presentation.login.LoginView();
         reservationSystem.presentation.login.Model loginModel = new reservationSystem.presentation.login.Model();
-        new reservationSystem.presentation.login.Controller(loginView, loginModel, reservationSystem.logic.Service.instance());
+        new reservationSystem.presentation.login.Controller(loginView, loginModel, reservationSystem.logic.ServiceProxy.instance());
         loginView.setVisible(true);
     }
 }
